@@ -1,0 +1,48 @@
+{
+  "taskId": "P009-T015",
+  "baseCommit": null,
+  "commit": null,
+  "filesChanged": [
+    "tests/math/qaRegression.test.ts",
+    "tests/io/security.test.ts",
+    "evidence/tests/T015-coverage.md",
+    "evidence/tests/T015-regression.log",
+    "handoff/P009-T015.json"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "logPath": "evidence/tests/T015-regression.log"
+    },
+    {
+      "command": "npm run test:math",
+      "exitCode": 0,
+      "logPath": "evidence/tests/T015-regression.log"
+    },
+    {
+      "command": "npm run test",
+      "exitCode": 0,
+      "logPath": "evidence/tests/T015-regression.log"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/tests/T015-regression.log"
+    },
+    {
+      "command": "npm run typecheck && npm run test:math && npm run test && npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/tests/T015-regression.log"
+    }
+  ],
+  "evidencePaths": [
+    "tests/math/qaRegression.test.ts",
+    "tests/io/security.test.ts",
+    "evidence/tests/T015-coverage.md",
+    "evidence/tests/T015-regression.log"
+  ],
+  "knownIssues": [],
+  "reviewerId": "independent-qa-agent/t015",
+  "reviewStatus": "VERIFIED"
+}

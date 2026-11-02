@@ -1,0 +1,50 @@
+{
+  "taskId": "P009-T014",
+  "baseCommit": null,
+  "commit": null,
+  "filesChanged": [
+    "src/ui/App.tsx",
+    "src/ui/ImportExport.tsx",
+    "src/ui/styles.css",
+    "tests/ui/integration.test.tsx",
+    "evidence/tests/P009-T014.log",
+    "handoff/P009-T014.json"
+  ],
+  "checks": [
+    {
+      "command": "npm run test:math",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T014.log"
+    },
+    {
+      "command": "npm run test",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T014.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T014.log"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T014.log"
+    },
+    {
+      "command": "npm run test:math && npm run test && npm run typecheck && npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T014.log"
+    }
+  ],
+  "evidencePaths": [
+    "evidence/tests/P009-T014.log",
+    "src/ui/App.tsx",
+    "src/ui/ImportExport.tsx",
+    "src/ui/styles.css",
+    "tests/ui/integration.test.tsx"
+  ],
+  "knownIssues": [],
+  "reviewerId": "implementer-agent/t014",
+  "reviewStatus": "VERIFIED"
+}

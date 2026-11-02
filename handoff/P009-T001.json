@@ -1,0 +1,57 @@
+{
+  "taskId": "P009-T001",
+  "baseCommit": null,
+  "commit": null,
+  "filesChanged": [
+    ".gitignore",
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json",
+    "vite.config.ts",
+    "playwright.config.ts",
+    "index.html",
+    "src/ui/main.tsx",
+    "src/ui/App.tsx",
+    "tests/math/smoke.test.ts",
+    "evidence/environment/T001.txt",
+    "handoff/P009-T001.json"
+  ],
+  "checks": [
+    {
+      "command": "node -v",
+      "exitCode": 0,
+      "logPath": "evidence/environment/T001.txt"
+    },
+    {
+      "command": "npm ci",
+      "exitCode": 0,
+      "logPath": "evidence/environment/T001.txt"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "logPath": "evidence/environment/T001.txt"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/environment/T001.txt"
+    },
+    {
+      "command": "npm run test",
+      "exitCode": 0,
+      "logPath": "evidence/environment/T001.txt"
+    },
+    {
+      "command": "npm run test:math",
+      "exitCode": 0,
+      "logPath": "evidence/environment/T001.txt"
+    }
+  ],
+  "evidencePaths": [
+    "evidence/environment/T001.txt"
+  ],
+  "knownIssues": [],
+  "reviewerId": "construction-agent/t001",
+  "reviewStatus": "VERIFIED"
+}

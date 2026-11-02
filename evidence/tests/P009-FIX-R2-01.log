@@ -1,0 +1,217 @@
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+
+> timefold@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/ui/timeRail.test.tsx (11 tests) 187ms
+ ✓ tests/math/workerProtocol.test.ts (25 tests) 468ms
+ ✓ tests/ui/integration.test.tsx (21 tests) 560ms
+ ✓ tests/math/qaRegression.test.ts (29 tests) 197ms
+ ✓ tests/oracle/independentOracle.test.ts (12 tests) 103ms
+ ✓ tests/ui/framework.test.tsx (18 tests) 194ms
+ ✓ tests/io/security.test.ts (29 tests) 196ms
+ ✓ tests/ui/witness.test.tsx (15 tests) 172ms
+ ✓ tests/math/invariants.test.ts (10 tests) 212ms
+ ✓ tests/io/json.test.ts (37 tests) 108ms
+ ✓ tests/math/validate.test.ts (33 tests) 92ms
+ ✓ tests/math/recurrence.test.ts (28 tests) 92ms
+ ✓ tests/math/calendar.test.ts (28 tests) 95ms
+stdout | tests/math/compare.test.ts > P009-T007 对照与最早见证汇总测试 > MATH08 黄金用例：TF-F 固定间隔漂移验证 > TF-F 产生正确的 4 个 UTC 实例、4 个 14:00Z 基线和 2026-03-09 +60 见证
+=== TF-F 逐日期 JSON 汇总证据 ===
+{
+  "schema": "timefold.result/1",
+  "input": {
+    "schema": "timefold.spec/1",
+    "name": "TF-F Fixed Interval Drift",
+    "synthetic": true,
+    "zone": {
+      "label": "America/New_York",
+      "snapshot": "frozen-2026",
+      "segments": [
+        {
+          "startUtc": "2025-12-30T00:00:00Z",
+          "endUtc": "2026-03-08T07:00:00Z",
+          "offsetMinutes": -300
+        },
+        {
+          "startUtc": "2026-03-08T07:00:00Z",
+          "endUtc": "2026-11-01T06:00:00Z",
+          "offsetMinutes": -240
+        },
+        {
+          "startUtc": "2026-11-01T06:00:00Z",
+          "endUtc": "2027-01-03T00:00:00Z",
+          "offsetMinutes": -300
+        }
+      ]
+    },
+    "schedule": {
+      "frequency": "weekly",
+      "startDate": "2026-03-02",
+      "endDate": "2026-03-23",
+      "localTime": "09:00",
+      "byWeekday": [
+        1
+      ]
+    },
+    "policy": {
+      "gap": "skip",
+      "fold": "earlier"
+    }
+  },
+  "occurrences": [
+    {
+      "requestedLocal": "2026-03-02 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-02 09:00"
+      ],
+      "baselineUtc": "2026-03-02T14:00:00Z",
+      "driftMinutes": 0
+    },
+    {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-16 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-16 09:00"
+      ],
+      "baselineUtc": "2026-03-16T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-23 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-23 09:00"
+      ],
+      "baselineUtc": "2026-03-23T14:00:00Z",
+      "driftMinutes": 60
+    }
+  ],
+  "requestCount": 4,
+  "selectedCount": 4,
+  "firstWitness": {
+    "type": "DRIFT",
+    "date": "2026-03-09",
+    "boundaryUtc": "2026-03-08T07:00:00Z",
+    "message": "Drift detected on 2026-03-09: baseline UTC (2026-03-09T14:00:00Z) differs by +60 min from wall-clock UTC (2026-03-09T13:00:00Z).",
+    "mapping": {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    }
+  }
+}
+
+ ✓ tests/math/compare.test.ts (12 tests) 25ms
+ ✓ tests/math/map.test.ts (45 tests) 87ms
+ ✓ tests/math/types.test.ts (6 tests) 8ms
+ ✓ tests/math/smoke.test.ts (2 tests) 4ms
+
+ Test Files  17 passed (17)
+      Tests  361 passed (361)
+   Start at  07:42:44
+   Duration  5.64s (transform 2.44s, setup 0ms, import 4.30s, tests 2.80s, environment 2ms)
+
+
+> timefold@0.1.0 build
+> npm run typecheck && vite build
+
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 49 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                            0.44 kB │ gzip:  0.32 kB
+dist/assets/timefold.worker-DBthH6KP.js   29.74 kB
+dist/assets/index-lYZDXPLH.css            12.13 kB │ gzip:  2.59 kB
+dist/assets/index-BvEelpQf.js            314.67 kB │ gzip: 93.14 kB
+✓ built in 1.90s
+
+> timefold@0.1.0 test:e2e
+> playwright test
+
+
+Running 7 tests using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/timefold.e2e.spec.ts:33:3 › P009 时隙镜 TimeFold 端到端测试 (E2E) › 1. 离线断言：加载与计算全程零外部网络请求 (3.1s)
+  ✓  2 [chromium] › tests/e2e/timefold.e2e.spec.ts:81:3 › P009 时隙镜 TimeFold 端到端测试 (E2E) › 2. 首屏默认加载 TF-B，六预设顺利切换并展示对应数学结果与截图 (5.1s)
+  ✓  3 [chromium] › tests/e2e/timefold.e2e.spec.ts:170:3 › P009 时隙镜 TimeFold 端到端测试 (E2E) › 3. 竞态测试：快速连续切换预设，最终结果严格与最后一次点击一致 (2.5s)
+  ✓  4 [chromium] › tests/e2e/timefold.e2e.spec.ts:216:3 › P009 时隙镜 TimeFold 端到端测试 (E2E) › 4. 键盘无障碍测试：Tab 键全程可达主要控件，支持键盘触发操作 (1.6s)
+  ✓  5 [chromium] › tests/e2e/timefold.e2e.spec.ts:280:3 › P009 时隙镜 TimeFold 端到端测试 (E2E) › 5. 响应式测试：1200px 桌面与 768px 平板不丢文字与主要操作，保存对应截图 (1.9s)
+  ✓  6 [chromium] › tests/e2e/timefold.e2e.spec.ts:322:3 › P009 时隙镜 TimeFold 端到端测试 (E2E) › 6. 两分钟演示主路径：TF-B -> 策略切换 -> TF-F -> 导入导出往返 -> 证据复制 (4.4s)
+
+================== 90 次请求性能基准统计 (FR12) ==================
+硬件环境: AMD EPYC 9D25 126-Core Processor (4 核), 7934 MB RAM
+执行环境: Node v24.22.1, OS linux x64
+排程配置: 2026-03-01 至 2026-05-29 (每日排程，恰好 90 个请求日期)
+采样样本 (15 次): [191.8, 218.7, 129.1, 131.7, 195.7, 139.9, 131.9, 219.3, 172, 180.6, 194.7, 143.1, 74.7, 113, 103] ms
+中位数 (Median): 143.1 ms (目标: ≤ 2000 ms) -> PASS
+平均值 (Mean):   155.95 ms
+最小值 (Min):    74.7 ms
+最大值 (Max):    219.3 ms
+95分位 (P95):    219.3 ms
+标准差 (StdDev): 42.22 ms
+===================================================================
+
+  ✓  7 [chromium] › tests/e2e/timefold.e2e.spec.ts:417:3 › P009 时隙镜 TimeFold 端到端测试 (E2E) › 7. 性能基准：90 次请求日程分析 Worker 耗时统计 (中位/均值/P95 统计，指标 ≤2.0s) (5.3s)
+
+  7 passed (26.7s)
+
+To open last HTML report run:
+
+  npx playwright show-report .tmp/playwright-report
+

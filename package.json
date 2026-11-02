@@ -1,0 +1,31 @@
+{
+  "name": "timefold",
+  "version": "0.1.0",
+  "private": true,
+  "description": "P009 时隙镜 TimeFold — 2026 夏令时公历跳折反像与固定 UTC 漂移对照器",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:math": "vitest run tests/math tests/oracle",
+    "build": "npm run typecheck && vite build",
+    "test:e2e": "playwright test",
+    "preview": "vite preview --host 127.0.0.1",
+    "release:bundle": "node scripts/build-release.mjs"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "5.1.4",
+    "typescript": "5.9.3",
+    "vite": "7.3.7",
+    "vitest": "4.1.12"
+  }
+}

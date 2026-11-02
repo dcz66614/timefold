@@ -1,0 +1,209 @@
+================================================================================
+P009-T007 验收证据日志：对照与最早见证汇总
+执行时间: 2026-11-02T04:22:51Z
+环境: Node v24.22.1, NPM 10.9.4, OS Linux x86_64
+================================================================================
+
+### 1. 首次差异定位与固定 1440 分钟对照含义说明
+
+对照基线定义（PROJECT_BOOK.md §5.3）：
+  - 以第一个实际有选中 UTC 实例的日期为 anchorDate、该日最早被选中 UTC 为 anchorUtc。
+  - 对其后第 d 个公历日构造 baselineUtc = anchorUtc + d * 1440 分钟。
+  - 对照仅对 daily/weekly 的被请求日期逐日计算；once 模式基线为 N/A (null)。
+  - 偏差公式：driftMinutes = baselineUtc - firstSelectedUtc。
+    正值表示固定间隔对照在绝对时间上更晚。
+
+TF-F 预设分析与首次差异定位（MATH08 黄金用例）：
+  - 区域：America/New_York (frozen-2026 快照)
+  - 排程：weekly Mondays 2026-03-02..2026-03-23 09:00 local
+  - 2026-03-02 (第 0 周, d=0): EST (-300 min)，墙上 09:00 对应 UTC 14:00Z。
+    作为 anchor：anchorDate = 2026-03-02, anchorUtc = 2026-03-02T14:00:00Z。
+    baselineUtc = 14:00Z, firstSelectedUtc = 14:00Z, driftMinutes = 0。
+  - 2026-03-08T07:00:00Z: 纽约发生夏令时跳跃跃迁，偏移从 -300 min 变为 -240 min。
+  - 2026-03-09 (第 1 周, d=7): EDT (-240 min)，墙上固定 09:00 对应 UTC 13:00Z。
+    固定 1440 min 基线：anchorUtc + 7 * 1440 min = 2026-03-09T14:00:00Z。
+    driftMinutes = 14:00Z - 13:00Z = +60 分钟。
+    首次见证定位：2026-03-09，见证类型 DRIFT，boundaryUtc = 2026-03-08T07:00:00Z。
+  - 2026-03-16 (第 2 周, d=14): 墙上 13:00Z，基线 14:00Z，driftMinutes = +60。
+  - 2026-03-23 (第 3 周, d=21): 墙上 13:00Z，基线 14:00Z，driftMinutes = +60。
+
+================================================================================
+### 2. 真实验收命令运行
+================================================================================
+
+[CMD 1] npx vitest run tests/math/compare.test.ts
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+stdout | tests/math/compare.test.ts > P009-T007 对照与最早见证汇总测试 > MATH08 黄金用例：TF-F 固定间隔漂移验证 > TF-F 产生正确的 4 个 UTC 实例、4 个 14:00Z 基线和 2026-03-09 +60 见证
+=== TF-F 逐日期 JSON 汇总证据 ===
+{
+  "schema": "timefold.result/1",
+  "input": {
+    "schema": "timefold.spec/1",
+    "name": "TF-F Fixed Interval Drift",
+    "synthetic": true,
+    "zone": {
+      "label": "America/New_York",
+      "snapshot": "frozen-2026",
+      "segments": [
+        {
+          "startUtc": "2025-12-30T00:00:00Z",
+          "endUtc": "2026-03-08T07:00:00Z",
+          "offsetMinutes": -300
+        },
+        {
+          "startUtc": "2026-03-08T07:00:00Z",
+          "endUtc": "2026-11-01T06:00:00Z",
+          "offsetMinutes": -240
+        },
+        {
+          "startUtc": "2026-11-01T06:00:00Z",
+          "endUtc": "2027-01-03T00:00:00Z",
+          "offsetMinutes": -300
+        }
+      ]
+    },
+    "schedule": {
+      "frequency": "weekly",
+      "startDate": "2026-03-02",
+      "endDate": "2026-03-23",
+      "localTime": "09:00",
+      "byWeekday": [
+        1
+      ]
+    },
+    "policy": {
+      "gap": "skip",
+      "fold": "earlier"
+    }
+  },
+  "occurrences": [
+    {
+      "requestedLocal": "2026-03-02 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-02 09:00"
+      ],
+      "baselineUtc": "2026-03-02T14:00:00Z",
+      "driftMinutes": 0
+    },
+    {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-16 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-16 09:00"
+      ],
+      "baselineUtc": "2026-03-16T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-23 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-23 09:00"
+      ],
+      "baselineUtc": "2026-03-23T14:00:00Z",
+      "driftMinutes": 60
+    }
+  ],
+  "requestCount": 4,
+  "selectedCount": 4,
+  "firstWitness": {
+    "type": "DRIFT",
+    "date": "2026-03-09",
+    "boundaryUtc": "2026-03-08T07:00:00Z",
+    "message": "Drift detected on 2026-03-09: baseline UTC (2026-03-09T14:00:00Z) differs by +60 min from wall-clock UTC (2026-03-09T13:00:00Z).",
+    "mapping": {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    }
+  }
+}
+
+ ✓ tests/math/compare.test.ts (12 tests) 20ms
+
+ Test Files  1 passed (1)
+      Tests  12 passed (12)
+   Start at  04:22:53
+   Duration  560ms (transform 240ms, setup 0ms, import 277ms, tests 20ms, environment 0ms)
+
+CMD 1 Exit Code: 0
+
+[CMD 2] npm run typecheck
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+CMD 2 Exit Code: 0
+
+[CMD 3] npm run build
+
+> timefold@0.1.0 build
+> npm run typecheck && vite build
+
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 28 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                  0.37 kB │ gzip:  0.28 kB
+dist/assets/index-CG2Ounkc.js  223.16 kB │ gzip: 69.78 kB
+✓ built in 2.01s
+CMD 3 Exit Code: 0
+
+================================================================================
+### 3. 全量验收汇总
+Vitest Exit Code: 0
+Typecheck Exit Code: 0
+Build Exit Code: 0
+STATUS: ALL_PASS
+================================================================================

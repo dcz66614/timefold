@@ -1,0 +1,36 @@
+{
+  "taskId": "P009-T008",
+  "baseCommit": null,
+  "commit": null,
+  "filesChanged": [
+    "tests/oracle/independentOracle.test.ts",
+    "tests/math/invariants.test.ts",
+    "evidence/tests/T008-oracle-coverage.md",
+    "evidence/tests/P009-T008.log",
+    "handoff/P009-T008.json"
+  ],
+  "checks": [
+    {
+      "command": "npm run test:math",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T008.log"
+    },
+    {
+      "command": "npm run test",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T008.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T008.log"
+    }
+  ],
+  "evidencePaths": [
+    "evidence/tests/T008-oracle-coverage.md",
+    "evidence/tests/P009-T008.log"
+  ],
+  "knownIssues": [],
+  "reviewerId": "independent-verification-agent/t008",
+  "reviewStatus": "VERIFIED"
+}

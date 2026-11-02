@@ -1,0 +1,41 @@
+=== 1. VITEST tests/ui/witness.test.tsx ===
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/ui/witness.test.tsx (15 tests) 58ms
+
+ Test Files  1 passed (1)
+      Tests  15 passed (15)
+   Start at  05:28:24
+   Duration  704ms (transform 315ms, setup 0ms, import 445ms, tests 58ms, environment 0ms)
+
+VITEST_STATUS=0
+
+=== 2. TYPECHECK ===
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+TYPECHECK_STATUS=0
+
+=== 3. BUILD ===
+
+> timefold@0.1.0 build
+> npm run typecheck && vite build
+
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 43 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.44 kB │ gzip:  0.32 kB
+dist/assets/index-1Zo50fu8.css   12.06 kB │ gzip:  2.58 kB
+dist/assets/index-CrcTt9cN.js   260.25 kB │ gzip: 80.24 kB
+✓ built in 1.85s
+BUILD_STATUS=0
+
+=== ALL CHECKS PASSED WITH EXIT CODE 0 ===

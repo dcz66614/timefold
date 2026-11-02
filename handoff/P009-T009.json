@@ -1,0 +1,47 @@
+{
+  "taskId": "P009-T009",
+  "baseCommit": null,
+  "commit": null,
+  "filesChanged": [
+    "src/data/presets.ts",
+    "src/io/json.ts",
+    "tests/fixtures/TF-A.json",
+    "tests/fixtures/TF-B.json",
+    "tests/fixtures/TF-C.json",
+    "tests/fixtures/TF-D.json",
+    "tests/fixtures/TF-E.json",
+    "tests/fixtures/TF-F.json",
+    "tests/io/json.test.ts",
+    "evidence/tests/P009-T009.log",
+    "handoff/P009-T009.json"
+  ],
+  "checks": [
+    {
+      "command": "npx vitest run tests/io/json.test.ts",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T009.log"
+    },
+    {
+      "command": "npm run test:math",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T009.log"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T009.log"
+    }
+  ],
+  "evidencePaths": [
+    "evidence/tests/P009-T009.log",
+    "tests/fixtures/TF-A.json",
+    "tests/fixtures/TF-B.json",
+    "tests/fixtures/TF-C.json",
+    "tests/fixtures/TF-D.json",
+    "tests/fixtures/TF-E.json",
+    "tests/fixtures/TF-F.json"
+  ],
+  "knownIssues": [],
+  "reviewerId": "implementer-agent/t009",
+  "reviewStatus": "VERIFIED"
+}

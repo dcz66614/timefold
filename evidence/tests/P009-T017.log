@@ -1,0 +1,468 @@
+=================================================================
+P009-T017 发布打包与全量验收验证开始
+开始时间: 2026-11-02T06:24:43Z
+源码目录: /home/hatch/workspace/p009-work/P009-timefold/03_source
+发布目录: /home/hatch/workspace/p009-work/P009-timefold/07_release
+干净验证目录: /home/hatch/workspace/p009-work/P009-timefold/.tmp/verify-t017-clean
+临时目录 TMPDIR: /home/hatch/workspace/p009-work/P009-timefold/.tmp
+Node 版本: v24.22.1
+npm 版本: 10.9.4
+系统信息: Linux htch-runtime 7.0.0-39-generic #1 SMP PREEMPT_DYNAMIC Thu Sep 24 08:42:15 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+=================================================================
+
+>>> [步骤 1/4] 源码构建与全量测试...
+--- 1.1 npm run typecheck ---
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+退出码: 0
+--- 1.2 npm run test ---
+
+> timefold@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/qaRegression.test.ts (29 tests) 255ms
+ ✓ tests/math/invariants.test.ts (10 tests) 271ms
+ ✓ tests/ui/integration.test.tsx (17 tests) 395ms
+ ✓ tests/ui/witness.test.tsx (15 tests) 170ms
+ ✓ tests/math/workerProtocol.test.ts (25 tests) 325ms
+ ✓ tests/ui/timeRail.test.tsx (11 tests) 204ms
+ ✓ tests/oracle/independentOracle.test.ts (12 tests) 185ms
+ ✓ tests/ui/framework.test.tsx (17 tests) 213ms
+ ✓ tests/io/json.test.ts (33 tests) 170ms
+ ✓ tests/math/map.test.ts (45 tests) 85ms
+ ✓ tests/io/security.test.ts (29 tests) 105ms
+ ✓ tests/math/validate.test.ts (33 tests) 93ms
+stdout | tests/math/compare.test.ts > P009-T007 对照与最早见证汇总测试 > MATH08 黄金用例：TF-F 固定间隔漂移验证 > TF-F 产生正确的 4 个 UTC 实例、4 个 14:00Z 基线和 2026-03-09 +60 见证
+=== TF-F 逐日期 JSON 汇总证据 ===
+{
+  "schema": "timefold.result/1",
+  "input": {
+    "schema": "timefold.spec/1",
+    "name": "TF-F Fixed Interval Drift",
+    "synthetic": true,
+    "zone": {
+      "label": "America/New_York",
+      "snapshot": "frozen-2026",
+      "segments": [
+        {
+          "startUtc": "2025-12-30T00:00:00Z",
+          "endUtc": "2026-03-08T07:00:00Z",
+          "offsetMinutes": -300
+        },
+        {
+          "startUtc": "2026-03-08T07:00:00Z",
+          "endUtc": "2026-11-01T06:00:00Z",
+          "offsetMinutes": -240
+        },
+        {
+          "startUtc": "2026-11-01T06:00:00Z",
+          "endUtc": "2027-01-03T00:00:00Z",
+          "offsetMinutes": -300
+        }
+      ]
+    },
+    "schedule": {
+      "frequency": "weekly",
+      "startDate": "2026-03-02",
+      "endDate": "2026-03-23",
+      "localTime": "09:00",
+      "byWeekday": [
+        1
+      ]
+    },
+    "policy": {
+      "gap": "skip",
+      "fold": "earlier"
+    }
+  },
+  "occurrences": [
+    {
+      "requestedLocal": "2026-03-02 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-02 09:00"
+      ],
+      "baselineUtc": "2026-03-02T14:00:00Z",
+      "driftMinutes": 0
+    },
+    {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-16 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-16 09:00"
+      ],
+      "baselineUtc": "2026-03-16T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-23 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-23 09:00"
+      ],
+      "baselineUtc": "2026-03-23T14:00:00Z",
+      "driftMinutes": 60
+    }
+  ],
+  "requestCount": 4,
+  "selectedCount": 4,
+  "firstWitness": {
+    "type": "DRIFT",
+    "date": "2026-03-09",
+    "boundaryUtc": "2026-03-08T07:00:00Z",
+    "message": "Drift detected on 2026-03-09: baseline UTC (2026-03-09T14:00:00Z) differs by +60 min from wall-clock UTC (2026-03-09T13:00:00Z).",
+    "mapping": {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    }
+  }
+}
+
+ ✓ tests/math/compare.test.ts (12 tests) 27ms
+ ✓ tests/math/recurrence.test.ts (28 tests) 46ms
+ ✓ tests/math/calendar.test.ts (28 tests) 29ms
+ ✓ tests/math/types.test.ts (6 tests) 8ms
+ ✓ tests/math/smoke.test.ts (2 tests) 4ms
+
+ Test Files  17 passed (17)
+      Tests  352 passed (352)
+   Start at  06:24:50
+   Duration  5.84s (transform 2.68s, setup 0ms, import 4.56s, tests 2.59s, environment 3ms)
+
+退出码: 0
+--- 1.3 npm run build ---
+
+> timefold@0.1.0 build
+> npm run typecheck && vite build
+
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 49 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                            0.44 kB │ gzip:  0.32 kB
+dist/assets/timefold.worker-DBthH6KP.js   29.74 kB
+dist/assets/index-lYZDXPLH.css            12.13 kB │ gzip:  2.59 kB
+dist/assets/index-B45Qf-_U.js            312.14 kB │ gzip: 92.37 kB
+✓ built in 2.78s
+退出码: 0
+
+>>> [步骤 2/4] 执行发布打包脚本 (npm run release:bundle)...
+
+> timefold@0.1.0 release:bundle
+> node scripts/build-release.mjs
+
+=== P009 时隙镜 TimeFold 发布打包脚本 ===
+源码根目录: /home/hatch/workspace/p009-work/P009-timefold/03_source
+工作区根目录: /home/hatch/workspace/p009-work/P009-timefold
+目标发布目录: /home/hatch/workspace/p009-work/P009-timefold/07_release
+收集到源码文件共 121 个
+正在生成 source.zip...
+source.zip 生成完成: 磁盘大小 7056961 字节, SHA-256: 3c15a07e3b5009709d0e776fa3ca9f3070d1db91aca6ac1cbd9389ff4bf45f7f
+正在生成 dist.zip...
+dist.zip 生成完成: 磁盘大小 103109 字节, SHA-256: 5b4cbaab00803f2a130ab75af83199fe844a06ca173f8105c36ce15d99f61af8
+REVIEW_MATERIALS.md 生成完成
+RELEASE_MANIFEST.json 生成完成
+SHA256SUMS.txt 及 hashes.txt 生成完成
+产物已同步镜像至 /home/hatch/workspace/p009-work/P009-timefold/03_source/release
+正在执行 sha256sum -c SHA256SUMS.txt 校验...
+source.zip: OK
+dist.zip: OK
+REVIEW_MATERIALS.md: OK
+RELEASE_MANIFEST.json: OK
+=== 发布打包与自检完成 ===
+退出码: 0
+
+>>> [步骤 3/4] 验证发布产物 SHA-256 清单...
+--- 3.1 sha256sum -c SHA256SUMS.txt ---
+source.zip: OK
+dist.zip: OK
+REVIEW_MATERIALS.md: OK
+RELEASE_MANIFEST.json: OK
+退出码: 0
+--- 3.2 sha256sum -c hashes.txt ---
+source.zip: OK
+dist.zip: OK
+REVIEW_MATERIALS.md: OK
+RELEASE_MANIFEST.json: OK
+退出码: 0
+
+>>> [步骤 4/4] 干净目录验证...
+--- 4.1 解压 source.zip 到干净目录 ---
+解压完成，退出码: 0
+干净目录文件列表:
+total 132
+drwxrws--- 1 root nogroup   328 Nov  2 06:25 .
+drwxrws--- 1 root nogroup    92 Nov  2 06:25 ..
+-rw-r----- 1 root nogroup    45 Nov  2 03:22 .gitignore
+-rw-r----- 1 root nogroup  1088 Nov  2 06:21 LICENSE
+-rw-r----- 1 root nogroup  5585 Nov  2 06:22 README.md
+-rw-r----- 1 root nogroup 18106 Nov  2 06:22 THIRD_PARTY_NOTICES.md
+drwxrwx--- 1 root nogroup    62 Nov  2 06:03 evidence
+drwxrwx--- 1 root nogroup   448 Nov  2 06:24 handoff
+-rw-r----- 1 root nogroup   345 Nov  2 03:22 index.html
+-rw-rw---- 1 root nogroup 76895 Nov  2 03:23 package-lock.json
+-rw-r----- 1 root nogroup   890 Nov  2 03:22 package.json
+-rw-r----- 1 root nogroup  1129 Nov  2 03:22 playwright.config.ts
+drwxr-x--- 1 root nogroup    34 Nov  2 06:23 scripts
+drwxr-x--- 1 root nogroup    36 Nov  2 04:46 src
+drwxr-x--- 1 root nogroup    50 Nov  2 05:42 tests
+-rw-r----- 1 root nogroup   579 Nov  2 03:22 tsconfig.json
+-rw-r----- 1 root nogroup   581 Nov  2 06:13 vite.config.ts
+--- 4.2 干净目录 npm ci ---
+
+added 101 packages in 2s
+
+18 packages are looking for funding
+  run `npm fund` for details
+退出码: 0
+--- 4.3 干净目录 npm run typecheck ---
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+退出码: 0
+--- 4.4 干净目录 npm run test ---
+
+> timefold@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/.tmp/verify-t017-clean
+
+ ✓ tests/math/validate.test.ts (33 tests) 75ms
+ ✓ tests/oracle/independentOracle.test.ts (12 tests) 191ms
+ ✓ tests/math/qaRegression.test.ts (29 tests) 213ms
+ ✓ tests/math/recurrence.test.ts (28 tests) 96ms
+ ✓ tests/io/security.test.ts (29 tests) 181ms
+ ✓ tests/math/invariants.test.ts (10 tests) 221ms
+ ✓ tests/math/map.test.ts (45 tests) 33ms
+ ✓ tests/io/json.test.ts (33 tests) 109ms
+ ✓ tests/math/workerProtocol.test.ts (25 tests) 173ms
+ ✓ tests/math/calendar.test.ts (28 tests) 39ms
+stdout | tests/math/compare.test.ts > P009-T007 对照与最早见证汇总测试 > MATH08 黄金用例：TF-F 固定间隔漂移验证 > TF-F 产生正确的 4 个 UTC 实例、4 个 14:00Z 基线和 2026-03-09 +60 见证
+=== TF-F 逐日期 JSON 汇总证据 ===
+{
+  "schema": "timefold.result/1",
+  "input": {
+    "schema": "timefold.spec/1",
+    "name": "TF-F Fixed Interval Drift",
+    "synthetic": true,
+    "zone": {
+      "label": "America/New_York",
+      "snapshot": "frozen-2026",
+      "segments": [
+        {
+          "startUtc": "2025-12-30T00:00:00Z",
+          "endUtc": "2026-03-08T07:00:00Z",
+          "offsetMinutes": -300
+        },
+        {
+          "startUtc": "2026-03-08T07:00:00Z",
+          "endUtc": "2026-11-01T06:00:00Z",
+          "offsetMinutes": -240
+        },
+        {
+          "startUtc": "2026-11-01T06:00:00Z",
+          "endUtc": "2027-01-03T00:00:00Z",
+          "offsetMinutes": -300
+        }
+      ]
+    },
+    "schedule": {
+      "frequency": "weekly",
+      "startDate": "2026-03-02",
+      "endDate": "2026-03-23",
+      "localTime": "09:00",
+      "byWeekday": [
+        1
+      ]
+    },
+    "policy": {
+      "gap": "skip",
+      "fold": "earlier"
+    }
+  },
+  "occurrences": [
+    {
+      "requestedLocal": "2026-03-02 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-02 09:00"
+      ],
+      "baselineUtc": "2026-03-02T14:00:00Z",
+      "driftMinutes": 0
+    },
+    {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-16 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-16 09:00"
+      ],
+      "baselineUtc": "2026-03-16T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-23 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-23 09:00"
+      ],
+      "baselineUtc": "2026-03-23T14:00:00Z",
+      "driftMinutes": 60
+    }
+  ],
+  "requestCount": 4,
+  "selectedCount": 4,
+  "firstWitness": {
+    "type": "DRIFT",
+    "date": "2026-03-09",
+    "boundaryUtc": "2026-03-08T07:00:00Z",
+    "message": "Drift detected on 2026-03-09: baseline UTC (2026-03-09T14:00:00Z) differs by +60 min from wall-clock UTC (2026-03-09T13:00:00Z).",
+    "mapping": {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    }
+  }
+}
+
+ ✓ tests/ui/integration.test.tsx (17 tests) 507ms
+ ✓ tests/math/compare.test.ts (12 tests) 29ms
+ ✓ tests/ui/witness.test.tsx (15 tests) 112ms
+ ✓ tests/ui/framework.test.tsx (17 tests) 117ms
+ ✓ tests/ui/timeRail.test.tsx (11 tests) 210ms
+ ✓ tests/math/types.test.ts (6 tests) 10ms
+ ✓ tests/math/smoke.test.ts (2 tests) 5ms
+
+ Test Files  17 passed (17)
+      Tests  352 passed (352)
+   Start at  06:25:16
+   Duration  5.54s (transform 2.49s, setup 0ms, import 4.57s, tests 2.32s, environment 2ms)
+
+退出码: 0
+--- 4.5 干净目录 npm run build ---
+
+> timefold@0.1.0 build
+> npm run typecheck && vite build
+
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 49 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                            0.44 kB │ gzip:  0.32 kB
+dist/assets/timefold.worker-DBthH6KP.js   29.74 kB
+dist/assets/index-lYZDXPLH.css            12.13 kB │ gzip:  2.59 kB
+dist/assets/index-B45Qf-_U.js            312.14 kB │ gzip: 92.37 kB
+✓ built in 2.04s
+退出码: 0
+
+=================================================================
+P009-T017 验证汇总统计:
+1. 源码主仓 typecheck && test && build: 全部 PASS (退出码 0)
+2. release:bundle 打包与 SHA-256 清单生成: 成功 (退出码 0)
+3. 校验 sha256sum -c SHA256SUMS.txt: 100% OK (退出码 0)
+4. 干净目录解压与 npm ci && typecheck && test && build: 全部 PASS (退出码 0)
+完成时间: 2026-11-02T06:25:30Z
+=================================================================

@@ -1,0 +1,366 @@
+================================================================================
+P009-T008 验收证据日志：独立数学 oracle 与不变量测试
+执行时间: 2026-11-02T04:40:33Z
+Node版本: v24.22.1, NPM版本: 10.9.4, 操作系统: Linux 7.0.0-39-generic x86_64
+工作目录: /home/hatch/workspace/p009-work/P009-timefold/03_source
+================================================================================
+
+### 1. 独立 Oracle 构造与方法说明
+  - 测试输出文件: tests/oracle/independentOracle.test.ts
+  - 不变量测试文件: tests/math/invariants.test.ts
+  - 覆盖文档: evidence/tests/T008-oracle-coverage.md
+  - 原则: 完全独立按 UTC 分钟暴力扫描，绝不调用或引用 src/core/map.ts 任何导出
+  - 依赖: 未安装 @js-temporal/polyfill，未修改 lockfile，使用分段表定义与纯公历分钟算术
+
+================================================================================
+### 2. 敏感性证明 (Sensitivity Proof)
+命令: npx vitest run tests/oracle/sensitivity.test.ts (在故意注入错误分支时运行)
+预期退出码: 1 (必须断言失败，证明非平凡通过)
+实际捕获失败输出:
+FAIL  tests/oracle/sensitivity.test.ts > T008 敏感性证明：故意引入错误应使断言明确失败 > 注入缺陷 1：若内核产生偏差 +1 分钟的错误候选，Oracle 必失败
+AssertionError: expected [ '2026-11-01T05:31:00Z', …(1) ] to deeply equal [ '2026-11-01T05:30:00Z', …(1) ]
+- Expected
++ Received
+  [
+-   "2026-11-01T05:30:00Z",
++   "2026-11-01T05:31:00Z",
+    "2026-11-01T06:30:00Z",
+  ]
+
+FAIL  tests/oracle/sensitivity.test.ts > T008 敏感性证明：故意引入错误应使断言明确失败 > 注入缺陷 2：若内核将 GAP 状态误判为 NORMAL 并虚构候选，Oracle 必失败
+AssertionError: expected 'NORMAL' to be 'GAP'
+Expected: "GAP"
+Received: "NORMAL"
+敏感性测试退出码: 1 (已由验证环境捕获并确认，临时测试文件已被立即删除，仓库零污染)
+
+================================================================================
+### 3. 正式验收命令执行日志
+================================================================================
+
+[CMD 1] npm run test:math
+
+> timefold@0.1.0 test:math
+> vitest run tests/math tests/oracle
+
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/validate.test.ts (33 tests) 73ms
+ ✓ tests/oracle/independentOracle.test.ts (12 tests) 91ms
+ ✓ tests/math/invariants.test.ts (10 tests) 137ms
+ ✓ tests/math/calendar.test.ts (28 tests) 72ms
+ ✓ tests/math/map.test.ts (45 tests) 34ms
+ ✓ tests/math/types.test.ts (6 tests) 8ms
+ ✓ tests/math/smoke.test.ts (2 tests) 4ms
+stdout | tests/math/compare.test.ts > P009-T007 对照与最早见证汇总测试 > MATH08 黄金用例：TF-F 固定间隔漂移验证 > TF-F 产生正确的 4 个 UTC 实例、4 个 14:00Z 基线和 2026-03-09 +60 见证
+=== TF-F 逐日期 JSON 汇总证据 ===
+{
+  "schema": "timefold.result/1",
+  "input": {
+    "schema": "timefold.spec/1",
+    "name": "TF-F Fixed Interval Drift",
+    "synthetic": true,
+    "zone": {
+      "label": "America/New_York",
+      "snapshot": "frozen-2026",
+      "segments": [
+        {
+          "startUtc": "2025-12-30T00:00:00Z",
+          "endUtc": "2026-03-08T07:00:00Z",
+          "offsetMinutes": -300
+        },
+        {
+          "startUtc": "2026-03-08T07:00:00Z",
+          "endUtc": "2026-11-01T06:00:00Z",
+          "offsetMinutes": -240
+        },
+        {
+          "startUtc": "2026-11-01T06:00:00Z",
+          "endUtc": "2027-01-03T00:00:00Z",
+          "offsetMinutes": -300
+        }
+      ]
+    },
+    "schedule": {
+      "frequency": "weekly",
+      "startDate": "2026-03-02",
+      "endDate": "2026-03-23",
+      "localTime": "09:00",
+      "byWeekday": [
+        1
+      ]
+    },
+    "policy": {
+      "gap": "skip",
+      "fold": "earlier"
+    }
+  },
+  "occurrences": [
+    {
+      "requestedLocal": "2026-03-02 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-02 09:00"
+      ],
+      "baselineUtc": "2026-03-02T14:00:00Z",
+      "driftMinutes": 0
+    },
+    {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-16 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-16 09:00"
+      ],
+      "baselineUtc": "2026-03-16T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-23 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-23 09:00"
+      ],
+      "baselineUtc": "2026-03-23T14:00:00Z",
+      "driftMinutes": 60
+    }
+  ],
+  "requestCount": 4,
+  "selectedCount": 4,
+  "firstWitness": {
+    "type": "DRIFT",
+    "date": "2026-03-09",
+    "boundaryUtc": "2026-03-08T07:00:00Z",
+    "message": "Drift detected on 2026-03-09: baseline UTC (2026-03-09T14:00:00Z) differs by +60 min from wall-clock UTC (2026-03-09T13:00:00Z).",
+    "mapping": {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    }
+  }
+}
+
+ ✓ tests/math/compare.test.ts (12 tests) 21ms
+ ✓ tests/math/recurrence.test.ts (28 tests) 26ms
+
+ Test Files  9 passed (9)
+      Tests  176 passed (176)
+   Start at  04:40:34
+   Duration  2.63s (transform 1.53s, setup 0ms, import 2.13s, tests 466ms, environment 1ms)
+
+Exit Code: 0
+
+[CMD 2] npm run test
+
+> timefold@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/validate.test.ts (33 tests) 92ms
+ ✓ tests/oracle/independentOracle.test.ts (12 tests) 114ms
+ ✓ tests/math/invariants.test.ts (10 tests) 283ms
+ ✓ tests/math/calendar.test.ts (28 tests) 75ms
+ ✓ tests/math/map.test.ts (45 tests) 97ms
+ ✓ tests/math/recurrence.test.ts (28 tests) 97ms
+stdout | tests/math/compare.test.ts > P009-T007 对照与最早见证汇总测试 > MATH08 黄金用例：TF-F 固定间隔漂移验证 > TF-F 产生正确的 4 个 UTC 实例、4 个 14:00Z 基线和 2026-03-09 +60 见证
+=== TF-F 逐日期 JSON 汇总证据 ===
+{
+  "schema": "timefold.result/1",
+  "input": {
+    "schema": "timefold.spec/1",
+    "name": "TF-F Fixed Interval Drift",
+    "synthetic": true,
+    "zone": {
+      "label": "America/New_York",
+      "snapshot": "frozen-2026",
+      "segments": [
+        {
+          "startUtc": "2025-12-30T00:00:00Z",
+          "endUtc": "2026-03-08T07:00:00Z",
+          "offsetMinutes": -300
+        },
+        {
+          "startUtc": "2026-03-08T07:00:00Z",
+          "endUtc": "2026-11-01T06:00:00Z",
+          "offsetMinutes": -240
+        },
+        {
+          "startUtc": "2026-11-01T06:00:00Z",
+          "endUtc": "2027-01-03T00:00:00Z",
+          "offsetMinutes": -300
+        }
+      ]
+    },
+    "schedule": {
+      "frequency": "weekly",
+      "startDate": "2026-03-02",
+      "endDate": "2026-03-23",
+      "localTime": "09:00",
+      "byWeekday": [
+        1
+      ]
+    },
+    "policy": {
+      "gap": "skip",
+      "fold": "earlier"
+    }
+  },
+  "occurrences": [
+    {
+      "requestedLocal": "2026-03-02 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-02 09:00"
+      ],
+      "baselineUtc": "2026-03-02T14:00:00Z",
+      "driftMinutes": 0
+    },
+    {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-16 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-16 09:00"
+      ],
+      "baselineUtc": "2026-03-16T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-23 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-23 09:00"
+      ],
+      "baselineUtc": "2026-03-23T14:00:00Z",
+      "driftMinutes": 60
+    }
+  ],
+  "requestCount": 4,
+  "selectedCount": 4,
+  "firstWitness": {
+    "type": "DRIFT",
+    "date": "2026-03-09",
+    "boundaryUtc": "2026-03-08T07:00:00Z",
+    "message": "Drift detected on 2026-03-09: baseline UTC (2026-03-09T14:00:00Z) differs by +60 min from wall-clock UTC (2026-03-09T13:00:00Z).",
+    "mapping": {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    }
+  }
+}
+
+ ✓ tests/math/compare.test.ts (12 tests) 26ms
+ ✓ tests/math/types.test.ts (6 tests) 9ms
+ ✓ tests/math/smoke.test.ts (2 tests) 21ms
+
+ Test Files  9 passed (9)
+      Tests  176 passed (176)
+   Start at  04:40:38
+   Duration  2.57s (transform 1.19s, setup 0ms, import 2.08s, tests 814ms, environment 1ms)
+
+Exit Code: 0
+
+[CMD 3] npm run typecheck
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+Exit Code: 0
+
+================================================================================
+### 4. 验收结论汇总
+================================================================================
+  - npm run test:math 退出码: 0
+  - npm run test 退出码: 0
+  - npm run typecheck 退出码: 0
+  - MATH01–MATH10 全部通过，无任何失败
+  - 50 个冻结样本零容差完全一致，无任何分歧
+  - 不变量 (JSON roundtrip、反投、深度冻结无变异、runId 隔离) 验证全部 PASS
+================================================================================

@@ -1,0 +1,34 @@
+=== Vitest tests/math/validate.test.ts ===
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/validate.test.ts (33 tests) 32ms
+
+ Test Files  1 passed (1)
+      Tests  33 passed (33)
+   Start at  03:53:39
+   Duration  491ms (transform 166ms, setup 0ms, import 199ms, tests 32ms, environment 0ms)
+
+=== npm run typecheck ===
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+=== npm run build ===
+
+> timefold@0.1.0 build
+> npm run typecheck && vite build
+
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 28 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                  0.37 kB │ gzip:  0.28 kB
+dist/assets/index-CG2Ounkc.js  223.16 kB │ gzip: 69.78 kB
+✓ built in 1.50s
+=== ALL COMMANDS FINISHED WITH EXIT CODE 0 ===

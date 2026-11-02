@@ -1,0 +1,30 @@
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/calendar.test.ts (28 tests) 21ms
+
+ Test Files  1 passed (1)
+      Tests  28 passed (28)
+   Start at  03:41:47
+   Duration  485ms (transform 134ms, setup 0ms, import 158ms, tests 21ms, environment 0ms)
+
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+
+> timefold@0.1.0 build
+> npm run typecheck && vite build
+
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 28 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                  0.37 kB │ gzip:  0.28 kB
+dist/assets/index-CG2Ounkc.js  223.16 kB │ gzip: 69.78 kB
+✓ built in 2.24s

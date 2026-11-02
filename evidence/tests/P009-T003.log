@@ -1,0 +1,127 @@
+=== Environment Info ===
+Timestamp: 2026-11-02T03:38:42Z
+Node version: v24.22.1
+NPM version: 10.9.4
+Platform: linux x64
+
+=== 1. Timezone Independence Verification across TZ Environments ===
+--- Testing with TZ=UTC ---
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/calendar.test.ts (28 tests) 21ms
+
+ Test Files  1 passed (1)
+      Tests  28 passed (28)
+   Start at  03:38:43
+   Duration  390ms (transform 138ms, setup 0ms, import 163ms, tests 21ms, environment 0ms)
+
+Exit Code (TZ=UTC): 0
+--- Testing with TZ=America/New_York ---
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/calendar.test.ts (28 tests) 48ms
+
+ Test Files  1 passed (1)
+      Tests  28 passed (28)
+   Start at  22:38:45
+   Duration  409ms (transform 128ms, setup 0ms, import 156ms, tests 48ms, environment 0ms)
+
+Exit Code (TZ=America/New_York): 0
+--- Testing with TZ=Asia/Tokyo ---
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/calendar.test.ts (28 tests) 20ms
+
+ Test Files  1 passed (1)
+      Tests  28 passed (28)
+   Start at  12:38:46
+   Duration  433ms (transform 99ms, setup 0ms, import 149ms, tests 20ms, environment 0ms)
+
+Exit Code (TZ=Asia/Tokyo): 0
+--- Testing with TZ=Pacific/Apia ---
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/calendar.test.ts (28 tests) 20ms
+
+ Test Files  1 passed (1)
+      Tests  28 passed (28)
+   Start at  16:38:47
+   Duration  418ms (transform 95ms, setup 0ms, import 160ms, tests 20ms, environment 0ms)
+
+Exit Code (TZ=Pacific/Apia): 0
+--- Testing with TZ=Europe/London ---
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/calendar.test.ts (28 tests) 21ms
+
+ Test Files  1 passed (1)
+      Tests  28 passed (28)
+   Start at  03:38:49
+   Duration  364ms (transform 120ms, setup 0ms, import 144ms, tests 21ms, environment 0ms)
+
+Exit Code (TZ=Europe/London): 0
+
+=== 2. Acceptance Command: npx vitest run tests/math/calendar.test.ts ===
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/calendar.test.ts (28 tests) 79ms
+
+ Test Files  1 passed (1)
+      Tests  28 passed (28)
+   Start at  03:38:50
+   Duration  757ms (transform 275ms, setup 0ms, import 305ms, tests 79ms, environment 0ms)
+
+Exit Code: 0
+
+=== 3. Acceptance Command: npm run typecheck ===
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+Exit Code: 0
+
+=== 4. Acceptance Command: npm run build ===
+
+> timefold@0.1.0 build
+> npm run typecheck && vite build
+
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 28 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                  0.37 kB │ gzip:  0.28 kB
+dist/assets/index-CG2Ounkc.js  223.16 kB │ gzip: 69.78 kB
+✓ built in 1.66s
+Exit Code: 0
+
+=== 5. All Math Tests: npm run test:math ===
+
+> timefold@0.1.0 test:math
+> vitest run tests/math tests/oracle
+
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/smoke.test.ts (2 tests) 9ms
+ ✓ tests/math/types.test.ts (6 tests) 10ms
+ ✓ tests/math/calendar.test.ts (28 tests) 55ms
+
+ Test Files  3 passed (3)
+      Tests  36 passed (36)
+   Start at  03:39:01
+   Duration  838ms (transform 422ms, setup 0ms, import 642ms, tests 74ms, environment 1ms)
+
+Exit Code: 0
+
+=== Verification Completed Successfully ===

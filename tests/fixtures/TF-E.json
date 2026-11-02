@@ -1,0 +1,27 @@
+{
+  "schema": "timefold.spec/1",
+  "name": "TF-E Tokyo Daily",
+  "synthetic": true,
+  "zone": {
+    "label": "Asia/Tokyo",
+    "snapshot": "frozen-2026",
+    "segments": [
+      {
+        "startUtc": "2025-12-30T00:00:00Z",
+        "endUtc": "2027-01-03T00:00:00Z",
+        "offsetMinutes": 540
+      }
+    ]
+  },
+  "schedule": {
+    "frequency": "daily",
+    "startDate": "2026-06-01",
+    "endDate": "2026-06-03",
+    "localTime": "09:00",
+    "byWeekday": []
+  },
+  "policy": {
+    "gap": "skip",
+    "fold": "earlier"
+  }
+}

@@ -1,0 +1,36 @@
+=== 1. VITEST tests/ui/timeRail.test.tsx ===
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/ui/timeRail.test.tsx (11 tests) 74ms
+
+ Test Files  1 passed (1)
+      Tests  11 passed (11)
+   Start at  05:20:59
+   Duration  833ms (transform 406ms, setup 0ms, import 489ms, tests 74ms, environment 0ms)
+
+
+=== 2. TYPECHECK ===
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+
+=== 3. BUILD ===
+
+> timefold@0.1.0 build
+> npm run typecheck && vite build
+
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 43 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.44 kB │ gzip:  0.32 kB
+dist/assets/index-1Zo50fu8.css   12.06 kB │ gzip:  2.58 kB
+dist/assets/index-CrcTt9cN.js   260.25 kB │ gzip: 80.24 kB
+✓ built in 1.93s

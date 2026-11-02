@@ -1,0 +1,204 @@
+================================================================================
+P009-T010 验收证据日志：唯一 Web Worker、runId 关联与防覆盖竞态
+执行时间: 2026-11-02T05:01:30Z
+环境: Node v24.22.1, NPM 10.9.4, OS Linux x86_64
+================================================================================
+
+### 1. 全仓代码检索唯一 new Worker( 实例化点
+Command: grep -rn "new Worker(" . --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.git --exclude-dir=.tmp --exclude-dir=evidence
+./src/worker/client.ts:68:    singletonWorker = new Worker(
+
+### 2. 验收命令：npx vitest run tests/math/workerProtocol.test.ts
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/workerProtocol.test.ts (25 tests) 42ms
+
+ Test Files  1 passed (1)
+      Tests  25 passed (25)
+   Start at  05:01:31
+   Duration  651ms (transform 261ms, setup 0ms, import 306ms, tests 42ms, environment 0ms)
+
+
+### 3. 类型检查：npm run typecheck
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+
+### 4. 生产构建：npm run build
+
+> timefold@0.1.0 build
+> npm run typecheck && vite build
+
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 28 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                  0.37 kB │ gzip:  0.28 kB
+dist/assets/index-CG2Ounkc.js  223.16 kB │ gzip: 69.78 kB
+✓ built in 1.60s
+
+### 5. 数学引擎与协议全集测试：npm run test:math
+
+> timefold@0.1.0 test:math
+> vitest run tests/math tests/oracle
+
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/validate.test.ts (33 tests) 174ms
+ ✓ tests/oracle/independentOracle.test.ts (12 tests) 121ms
+ ✓ tests/math/invariants.test.ts (10 tests) 220ms
+ ✓ tests/math/recurrence.test.ts (28 tests) 98ms
+stdout | tests/math/compare.test.ts > P009-T007 对照与最早见证汇总测试 > MATH08 黄金用例：TF-F 固定间隔漂移验证 > TF-F 产生正确的 4 个 UTC 实例、4 个 14:00Z 基线和 2026-03-09 +60 见证
+=== TF-F 逐日期 JSON 汇总证据 ===
+{
+  "schema": "timefold.result/1",
+  "input": {
+    "schema": "timefold.spec/1",
+    "name": "TF-F Fixed Interval Drift",
+    "synthetic": true,
+    "zone": {
+      "label": "America/New_York",
+      "snapshot": "frozen-2026",
+      "segments": [
+        {
+          "startUtc": "2025-12-30T00:00:00Z",
+          "endUtc": "2026-03-08T07:00:00Z",
+          "offsetMinutes": -300
+        },
+        {
+          "startUtc": "2026-03-08T07:00:00Z",
+          "endUtc": "2026-11-01T06:00:00Z",
+          "offsetMinutes": -240
+        },
+        {
+          "startUtc": "2026-11-01T06:00:00Z",
+          "endUtc": "2027-01-03T00:00:00Z",
+          "offsetMinutes": -300
+        }
+      ]
+    },
+    "schedule": {
+      "frequency": "weekly",
+      "startDate": "2026-03-02",
+      "endDate": "2026-03-23",
+      "localTime": "09:00",
+      "byWeekday": [
+        1
+      ]
+    },
+    "policy": {
+      "gap": "skip",
+      "fold": "earlier"
+    }
+  },
+  "occurrences": [
+    {
+      "requestedLocal": "2026-03-02 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-02 09:00"
+      ],
+      "baselineUtc": "2026-03-02T14:00:00Z",
+      "driftMinutes": 0
+    },
+    {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-16 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-16 09:00"
+      ],
+      "baselineUtc": "2026-03-16T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-23 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-23 09:00"
+      ],
+      "baselineUtc": "2026-03-23T14:00:00Z",
+      "driftMinutes": 60
+    }
+  ],
+  "requestCount": 4,
+  "selectedCount": 4,
+  "firstWitness": {
+    "type": "DRIFT",
+    "date": "2026-03-09",
+    "boundaryUtc": "2026-03-08T07:00:00Z",
+    "message": "Drift detected on 2026-03-09: baseline UTC (2026-03-09T14:00:00Z) differs by +60 min from wall-clock UTC (2026-03-09T13:00:00Z).",
+    "mapping": {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    }
+  }
+}
+
+ ✓ tests/math/compare.test.ts (12 tests) 77ms
+ ✓ tests/math/workerProtocol.test.ts (25 tests) 177ms
+ ✓ tests/math/calendar.test.ts (28 tests) 82ms
+ ✓ tests/math/types.test.ts (6 tests) 9ms
+ ✓ tests/math/map.test.ts (45 tests) 27ms
+ ✓ tests/math/smoke.test.ts (2 tests) 4ms
+
+ Test Files  10 passed (10)
+      Tests  201 passed (201)
+   Start at  05:01:45
+   Duration  2.98s (transform 1.67s, setup 0ms, import 2.44s, tests 989ms, environment 1ms)
+
+
+================================================================================
+全部验收命令执行完成，退出码: 0
+================================================================================

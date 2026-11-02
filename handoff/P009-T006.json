@@ -1,0 +1,34 @@
+{
+  "taskId": "P009-T006",
+  "baseCommit": null,
+  "commit": null,
+  "filesChanged": [
+    "src/core/recurrence.ts",
+    "tests/math/recurrence.test.ts",
+    "evidence/tests/P009-T006.log",
+    "handoff/P009-T006.json"
+  ],
+  "checks": [
+    {
+      "command": "npx vitest run tests/math/recurrence.test.ts",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T006.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T006.log"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T006.log"
+    }
+  ],
+  "evidencePaths": [
+    "evidence/tests/P009-T006.log"
+  ],
+  "knownIssues": [],
+  "reviewerId": "construction-agent/t006",
+  "reviewStatus": "VERIFIED"
+}

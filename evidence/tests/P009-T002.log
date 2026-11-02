@@ -1,0 +1,48 @@
+=== Environment Info ===
+Timestamp: 2026-11-02T03:29:59Z
+Node version: v24.22.1
+NPM version: 10.9.4
+Git status:
+fatal: not a git repository (or any parent up to mount point /home)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+=== 1. npm run typecheck ===
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+Exit Code: 0
+=== 2. npm run test:math ===
+
+> timefold@0.1.0 test:math
+> vitest run tests/math tests/oracle
+
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/smoke.test.ts (2 tests) 6ms
+ ✓ tests/math/types.test.ts (6 tests) 9ms
+
+ Test Files  2 passed (2)
+      Tests  8 passed (8)
+   Start at  03:30:03
+   Duration  481ms (transform 129ms, setup 0ms, import 221ms, tests 15ms, environment 0ms)
+
+Exit Code: 0
+=== 3. npm run build ===
+
+> timefold@0.1.0 build
+> npm run typecheck && vite build
+
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 28 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                  0.37 kB │ gzip:  0.28 kB
+dist/assets/index-CG2Ounkc.js  223.16 kB │ gzip: 69.78 kB
+✓ built in 1.60s
+Exit Code: 0

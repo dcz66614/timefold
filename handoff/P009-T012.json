@@ -1,0 +1,41 @@
+{
+  "taskId": "P009-T012",
+  "baseCommit": null,
+  "commit": null,
+  "filesChanged": [
+    "src/ui/TimeRail.tsx",
+    "tests/ui/timeRail.test.tsx",
+    "evidence/tests/P009-T012.log",
+    "handoff/P009-T012.json"
+  ],
+  "checks": [
+    {
+      "command": "npx vitest run tests/ui/timeRail.test.tsx",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T012.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T012.log"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T012.log"
+    },
+    {
+      "command": "npx vitest run tests/ui/timeRail.test.tsx && npm run typecheck && npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T012.log"
+    }
+  ],
+  "evidencePaths": [
+    "evidence/tests/P009-T012.log",
+    "src/ui/TimeRail.tsx",
+    "tests/ui/timeRail.test.tsx"
+  ],
+  "knownIssues": [],
+  "reviewerId": "implementer-agent/t012",
+  "reviewStatus": "VERIFIED"
+}

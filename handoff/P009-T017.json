@@ -1,0 +1,67 @@
+{
+  "taskId": "P009-T017",
+  "baseCommit": null,
+  "commit": null,
+  "filesChanged": [
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "README.md",
+    "scripts/build-release.mjs",
+    "evidence/tests/P009-T017.log",
+    "handoff/P009-T017.json"
+  ],
+  "releaseDeliverables": {
+    "sourceZip": {
+      "path": "/home/hatch/workspace/p009-work/P009-timefold/07_release/source.zip",
+      "sizeBytesOnDisk": 7056961,
+      "sha256": "3c15a07e3b5009709d0e776fa3ca9f3070d1db91aca6ac1cbd9389ff4bf45f7f"
+    },
+    "distZip": {
+      "path": "/home/hatch/workspace/p009-work/P009-timefold/07_release/dist.zip",
+      "sizeBytesOnDisk": 103109,
+      "sha256": "5b4cbaab00803f2a130ab75af83199fe844a06ca173f8105c36ce15d99f61af8"
+    },
+    "sha256Manifest": {
+      "path": "/home/hatch/workspace/p009-work/P009-timefold/07_release/SHA256SUMS.txt",
+      "hashesTxt": "/home/hatch/workspace/p009-work/P009-timefold/07_release/hashes.txt"
+    },
+    "releaseManifest": {
+      "path": "/home/hatch/workspace/p009-work/P009-timefold/07_release/RELEASE_MANIFEST.json",
+      "sha256": "04bfa1341442fa75fb354737f2b860ec59230fa2c2a655aa6bf683b57007e40b"
+    },
+    "reviewMaterials": {
+      "path": "/home/hatch/workspace/p009-work/P009-timefold/07_release/REVIEW_MATERIALS.md",
+      "sha256": "66ffb0f241f9bacf54d44d75a642d32682aa926d14227c83352417191408fdb7"
+    }
+  },
+  "checks": [
+    {
+      "command": "npm run typecheck && npm run test && npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T017.log"
+    },
+    {
+      "command": "npm run release:bundle",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T017.log"
+    },
+    {
+      "command": "cd ../07_release && sha256sum -c SHA256SUMS.txt",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T017.log"
+    },
+    {
+      "command": "cd clean_dir && npm ci && npm run typecheck && npm run test && npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T017.log"
+    }
+  ],
+  "evidencePaths": [
+    "evidence/tests/P009-T017.log",
+    "/home/hatch/workspace/p009-work/P009-timefold/07_release/RELEASE_MANIFEST.json",
+    "/home/hatch/workspace/p009-work/P009-timefold/07_release/REVIEW_MATERIALS.md"
+  ],
+  "knownIssues": [],
+  "reviewerId": "construction-agent/t017",
+  "reviewStatus": "VERIFIED"
+}

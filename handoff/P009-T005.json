@@ -1,0 +1,39 @@
+{
+  "taskId": "P009-T005",
+  "baseCommit": null,
+  "commit": null,
+  "filesChanged": [
+    "src/core/map.ts",
+    "tests/math/map.test.ts",
+    "evidence/tests/P009-T005.log",
+    "handoff/P009-T005.json"
+  ],
+  "checks": [
+    {
+      "command": "npx vitest run tests/math/map.test.ts",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T005.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T005.log"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T005.log"
+    },
+    {
+      "command": "npm run test:math",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T005.log"
+    }
+  ],
+  "evidencePaths": [
+    "evidence/tests/P009-T005.log"
+  ],
+  "knownIssues": [],
+  "reviewerId": "construction-agent/t005",
+  "reviewStatus": "VERIFIED"
+}

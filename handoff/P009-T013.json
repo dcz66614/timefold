@@ -1,0 +1,43 @@
+{
+  "taskId": "P009-T013",
+  "baseCommit": null,
+  "commit": null,
+  "filesChanged": [
+    "src/ui/WitnessPanel.tsx",
+    "src/ui/AuditTable.tsx",
+    "tests/ui/witness.test.tsx",
+    "evidence/tests/P009-T013.log",
+    "handoff/P009-T013.json"
+  ],
+  "checks": [
+    {
+      "command": "npx vitest run tests/ui/witness.test.tsx",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T013.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T013.log"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T013.log"
+    },
+    {
+      "command": "npx vitest run tests/ui/witness.test.tsx && npm run typecheck && npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T013.log"
+    }
+  ],
+  "evidencePaths": [
+    "evidence/tests/P009-T013.log",
+    "src/ui/WitnessPanel.tsx",
+    "src/ui/AuditTable.tsx",
+    "tests/ui/witness.test.tsx"
+  ],
+  "knownIssues": [],
+  "reviewerId": "implementer-agent/t013",
+  "reviewStatus": "VERIFIED"
+}

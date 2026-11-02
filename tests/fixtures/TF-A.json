@@ -1,0 +1,37 @@
+{
+  "schema": "timefold.spec/1",
+  "name": "TF-A Spring Gap",
+  "synthetic": true,
+  "zone": {
+    "label": "America/New_York",
+    "snapshot": "frozen-2026",
+    "segments": [
+      {
+        "startUtc": "2025-12-30T00:00:00Z",
+        "endUtc": "2026-03-08T07:00:00Z",
+        "offsetMinutes": -300
+      },
+      {
+        "startUtc": "2026-03-08T07:00:00Z",
+        "endUtc": "2026-11-01T06:00:00Z",
+        "offsetMinutes": -240
+      },
+      {
+        "startUtc": "2026-11-01T06:00:00Z",
+        "endUtc": "2027-01-03T00:00:00Z",
+        "offsetMinutes": -300
+      }
+    ]
+  },
+  "schedule": {
+    "frequency": "once",
+    "startDate": "2026-03-08",
+    "endDate": "2026-03-08",
+    "localTime": "02:30",
+    "byWeekday": []
+  },
+  "policy": {
+    "gap": "skip",
+    "fold": "earlier"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "taskId": "P009-T016",
+  "baseCommit": null,
+  "commit": null,
+  "filesChanged": [
+    "tests/e2e/timefold.e2e.spec.ts",
+    "vite.config.ts",
+    "evidence/tests/T016-e2e.log",
+    "evidence/tests/T016-perf.json",
+    "evidence/demo/01-initial-TF-B.png",
+    "evidence/demo/02-fold-policy-earlier.png",
+    "evidence/demo/03-fold-policy-later.png",
+    "evidence/demo/04-fold-policy-both.png",
+    "evidence/demo/05-switch-to-TF-F.png",
+    "evidence/demo/06-gap-shiftforward.png",
+    "evidence/demo/07-json-roundtrip.png",
+    "evidence/demo/08-witness-evidence.png",
+    "evidence/demo/09-responsive-1200px.png",
+    "evidence/demo/10-responsive-768px.png",
+    "evidence/demo/preset-TF-A.png",
+    "evidence/demo/preset-TF-B.png",
+    "evidence/demo/preset-TF-C.png",
+    "evidence/demo/preset-TF-D.png",
+    "evidence/demo/preset-TF-E.png",
+    "evidence/demo/preset-TF-F.png",
+    "evidence/screenshots/timefold-1200px-TF-B.png",
+    "evidence/screenshots/timefold-768px-TF-B.png",
+    "evidence/screenshots/preset-TF-A.png",
+    "evidence/screenshots/preset-TF-B.png",
+    "evidence/screenshots/preset-TF-C.png",
+    "evidence/screenshots/preset-TF-D.png",
+    "evidence/screenshots/preset-TF-E.png",
+    "evidence/screenshots/preset-TF-F.png",
+    "handoff/P009-T016.json"
+  ],
+  "checks": [
+    {
+      "command": "npm run test:e2e",
+      "exitCode": 0,
+      "logPath": "evidence/tests/T016-e2e.log"
+    },
+    {
+      "command": "npm run typecheck && npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/tests/T016-e2e.log"
+    },
+    {
+      "command": "npm run test:math && npm run test",
+      "exitCode": 0,
+      "logPath": "evidence/tests/T016-e2e.log"
+    }
+  ],
+  "evidencePaths": [
+    "tests/e2e/timefold.e2e.spec.ts",
+    "evidence/tests/T016-e2e.log",
+    "evidence/tests/T016-perf.json",
+    "evidence/demo/",
+    "evidence/screenshots/"
+  ],
+  "knownIssues": [],
+  "reviewerId": "construction-agent/t016",
+  "reviewStatus": "VERIFIED"
+}

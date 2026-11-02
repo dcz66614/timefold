@@ -1,0 +1,187 @@
+================================================================================
+P009 时隙镜 TimeFold — T001 环境、工程骨架与依赖锁验收集
+================================================================================
+Generated At: 2026-11-02T03:26:00Z
+Task Card: TASK-P009-T001
+Working Directory: /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+--------------------------------------------------------------------------------
+1. VM & 操作系统环境 (Operating System & Hardware)
+--------------------------------------------------------------------------------
+[OS Kernel]
+uname -a:
+Linux htch-runtime 7.0.0-39-generic #1 SMP PREEMPT_DYNAMIC Thu Sep 24 08:42:15 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+
+[Node Platform / Architecture]
+node -p "process.platform + ' ' + process.arch":
+linux x64
+
+[CPU Information]
+lscpu:
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Address sizes:       46 bits physical, 57 bits virtual
+Byte Order:          Little Endian
+CPU(s):              4
+On-line CPU(s) list: 0-3
+Vendor ID:           AuthenticAMD
+Model name:          AMD EPYC 9D25 126-Core Processor
+CPU family:          26
+Model:               17
+Thread(s) per core:  1
+Core(s) per socket:  4
+Socket(s):           1
+Hypervisor vendor:   KVM
+Virtualization type: full
+
+[Memory Information]
+free -m:
+               total        used        free      shared  buff/cache   available
+Mem:            7934        7501         124         134         686         432
+Swap:              0           0           0
+
+[Storage & Mounts]
+df -h:
+Filesystem      Size  Used Avail Use% Mounted on
+overlay         7.5G  183M  7.4G   3% /
+tmpfs           512M   21M  492M   4% /tmp
+/dev/mapper/rv  150G  3.3G  146G   3% /home/hatch
+tmpfs           2.0G     0  2.0G   0% /var/tmp
+
+[Temporary Directory Configuration]
+TMPDIR: /home/hatch/workspace/p009-work/P009-timefold/03_source/.tmp
+Note: /tmp is 512MB tmpfs; temporary files are mapped to disk workspace .tmp/.
+
+--------------------------------------------------------------------------------
+2. 工具链与浏览器来源 (Toolchain & Browser Source)
+--------------------------------------------------------------------------------
+Node.js: v24.22.1 (Target: Node 24.x - MATCH)
+npm:     10.9.4
+git:     git version 2.43.0
+
+Playwright Browser:
+Version: @playwright/test 1.64.1
+Chromium executable: /home/hatch/.cache/ms-playwright/chromium-1248/chrome-linux64/chrome
+Headless launch verification: SUCCESS (launch test confirmed headlessly with --no-sandbox)
+
+--------------------------------------------------------------------------------
+3. 精确锁定依赖版本 (Exact Locked Dependencies)
+--------------------------------------------------------------------------------
+[package.json Dependencies]
+"react": "19.3.1"
+"react-dom": "19.3.1"
+
+[package.json devDependencies]
+"@playwright/test": "1.64.1"
+"@types/node": "24.19.2"
+"@types/react": "19.3.0"
+"@types/react-dom": "19.3.0"
+"@vitejs/plugin-react": "5.1.4"
+"typescript": "5.9.3"
+"vite": "7.3.7"
+"vitest": "4.1.12"
+
+[Dependency Policies Compliance]
+- React 19.x: react@19.3.1, react-dom@19.3.1
+- TypeScript 5.x: typescript@5.9.3
+- Vite 7.x: vite@7.3.7
+- Vitest: vitest@4.1.12
+- Playwright: @playwright/test@1.64.1
+- Runtime date / rrule libraries: NONE (0 dependencies)
+- @js-temporal/polyfill: NONE (reserved for dev-only oracle in T008)
+- package.json SHA-256: 690505f1b9fc248cf227f5406e4eb86e749e22e78ad156cba6fcf651dab8f8df
+- package-lock.json SHA-256: b43ddd0e91a32fec153c0a916a2acaae7bf8f91f6d3a74d90b722b473f80f42f
+
+--------------------------------------------------------------------------------
+4. 真实执行命令日志与退出码 (Command Logs & Exit Codes)
+--------------------------------------------------------------------------------
+
+[Command 1: Node Version Check]
+$ node -v
+v24.22.1
+Exit Code: 0
+
+[Command 2: NPM Version Check]
+$ npm -v
+10.9.4
+Exit Code: 0
+
+[Command 3: Clean Dependency Installation]
+$ npm ci
+added 101 packages in 2s
+Exit Code: 0
+
+[Command 4: Typecheck]
+$ npm run typecheck
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+Exit Code: 0
+
+[Command 5: Build]
+$ npm run build
+> timefold@0.1.0 build
+> npm run typecheck && vite build
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+vite v7.3.7 building client environment for production...
+transforming (1) src/ui/main.tsx
+transforming (11) commonjsHelpers.js
+transforming (21) node_modules/react-dom/client.js
+✓ 28 modules transformed.
+dist/index.html                  0.37 kB │ gzip:  0.28 kB
+dist/assets/index-CG2Ounkc.js  223.16 kB │ gzip: 69.78 kB
+✓ built in 1.74s
+Exit Code: 0
+
+[Command 6: Test Suite (Unit Smoke Tests)]
+$ npm run test
+> timefold@0.1.0 test
+> vitest run
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/smoke.test.ts (2 tests) 4ms
+   ✓ T001 Smoke Test (2)
+     ✓ verifies basic math and test harness operational 2ms
+     ✓ verifies UTC minute calculation primitive works 0ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  03:25:29
+   Duration  267ms (transform 35ms, setup 0ms, import 51ms, tests 4ms, environment 0ms)
+Exit Code: 0
+
+[Command 7: Math Test Suite]
+$ npm run test:math
+> timefold@0.1.0 test:math
+> vitest run tests/math tests/oracle
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/smoke.test.ts (2 tests) 4ms
+   ✓ T001 Smoke Test (2)
+     ✓ verifies basic math and test harness operational 2ms
+     ✓ verifies UTC minute calculation primitive works 0ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  03:25:30
+   Duration  328ms (transform 78ms, setup 0ms, import 97ms, tests 4ms, environment 0ms)
+Exit Code: 0
+
+[Command 8: Playwright Headless Chromium Check]
+$ node -e "const { chromium } = require('@playwright/test'); (async () => { const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] }); const page = await browser.newPage(); await page.setContent('<h1>TimeFold T001</h1>'); console.log('Chromium launch successful, page title length:', (await page.title()).length); await browser.close(); })().catch(err => { console.error(err); process.exit(1); });"
+Chromium launch successful, page title length: 0
+Exit Code: 0
+
+--------------------------------------------------------------------------------
+5. 结论 (Summary)
+--------------------------------------------------------------------------------
+T001 目标全数完成：
+1. VM 与宿主环境检测完成，已将 TMPDIR 规避到磁盘 .tmp/，无 /tmp 溢出风险。
+2. React 19.3.1 + TypeScript 5.9.3 + Vite 7.3.7 + Vitest 4.1.12 + Playwright 1.64.1 精确版本锁定于 package-lock.json。
+3. 无任何第三方运行时日期/rrule库。
+4. 固定 scripts 全量就绪，node -v (24.x)、npm ci、npm run typecheck、npm run build、npm run test 全部真实运行且退出码均为 0。
+5. 空壳界面构建产物输出完整。

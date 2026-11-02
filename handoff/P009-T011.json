@@ -1,0 +1,49 @@
+{
+  "taskId": "P009-T011",
+  "baseCommit": null,
+  "commit": null,
+  "filesChanged": [
+    "src/ui/App.tsx",
+    "src/ui/styles.css",
+    "src/ui/ScheduleEditor.tsx",
+    "src/ui/PresetBar.tsx",
+    "src/ui/StatusBanner.tsx",
+    "tests/ui/framework.test.tsx",
+    "evidence/tests/P009-T011.log",
+    "handoff/P009-T011.json"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T011.log"
+    },
+    {
+      "command": "npm run test",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T011.log"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T011.log"
+    },
+    {
+      "command": "npm run typecheck && npm run test && npm run build",
+      "exitCode": 0,
+      "logPath": "evidence/tests/P009-T011.log"
+    }
+  ],
+  "evidencePaths": [
+    "evidence/tests/P009-T011.log",
+    "src/ui/App.tsx",
+    "src/ui/styles.css",
+    "src/ui/ScheduleEditor.tsx",
+    "src/ui/PresetBar.tsx",
+    "src/ui/StatusBanner.tsx",
+    "tests/ui/framework.test.tsx"
+  ],
+  "knownIssues": [],
+  "reviewerId": "implementer-agent/t011",
+  "reviewStatus": "VERIFIED"
+}

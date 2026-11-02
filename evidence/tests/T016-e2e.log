@@ -1,0 +1,398 @@
+================================================================================
+P009-T016 Playwright E2E, 2-Min Demo, Offline, Race & 90-Req Benchmark Acceptance
+Timestamp (UTC): 2026-11-02T06:14:46Z
+Node: v24.22.1
+NPM: 10.9.4
+OS: Linux 7.0.0-39-generic x86_64
+Hardware CPU: AMD EPYC 9D25 126-Core Processor
+Hardware Cores: 4
+Hardware Memory: 7934 MB
+================================================================================
+
+>>> [Phase 1/3] npm run test:e2e <<<
+
+> timefold@0.1.0 test:e2e
+> playwright test
+
+
+Running 7 tests using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/timefold.e2e.spec.ts:33:3 › P009 时隙镜 TimeFold 端到端测试 (E2E) › 1. 离线断言：加载与计算全程零外部网络请求 (1.2s)
+  ✓  2 [chromium] › tests/e2e/timefold.e2e.spec.ts:81:3 › P009 时隙镜 TimeFold 端到端测试 (E2E) › 2. 首屏默认加载 TF-B，六预设顺利切换并展示对应数学结果与截图 (5.1s)
+  ✓  3 [chromium] › tests/e2e/timefold.e2e.spec.ts:170:3 › P009 时隙镜 TimeFold 端到端测试 (E2E) › 3. 竞态测试：快速连续切换预设，最终结果严格与最后一次点击一致 (2.4s)
+  ✓  4 [chromium] › tests/e2e/timefold.e2e.spec.ts:216:3 › P009 时隙镜 TimeFold 端到端测试 (E2E) › 4. 键盘无障碍测试：Tab 键全程可达主要控件，支持键盘触发操作 (1.4s)
+  ✓  5 [chromium] › tests/e2e/timefold.e2e.spec.ts:276:3 › P009 时隙镜 TimeFold 端到端测试 (E2E) › 5. 响应式测试：1200px 桌面与 768px 平板不丢文字与主要操作，保存对应截图 (2.1s)
+  ✓  6 [chromium] › tests/e2e/timefold.e2e.spec.ts:318:3 › P009 时隙镜 TimeFold 端到端测试 (E2E) › 6. 两分钟演示主路径：TF-B -> 策略切换 -> TF-F -> 导入导出往返 -> 证据复制 (4.4s)
+
+================== 90 次请求性能基准统计 (FR12) ==================
+硬件环境: AMD EPYC 9D25 126-Core Processor (4 核), 7934 MB RAM
+执行环境: Node v24.22.1, OS linux x64
+排程配置: 2026-03-01 至 2026-05-29 (每日排程，恰好 90 个请求日期)
+采样样本 (15 次): [194.1, 200.9, 183.8, 196.3, 110.5, 122.4, 166.5, 120.4, 109.6, 166.1, 132.7, 170.8, 182.6, 178.8, 201.2] ms
+中位数 (Median): 170.8 ms (目标: ≤ 2000 ms) -> PASS
+平均值 (Mean):   162.45 ms
+最小值 (Min):    109.6 ms
+最大值 (Max):    201.2 ms
+95分位 (P95):    201.2 ms
+标准差 (StdDev): 32.77 ms
+===================================================================
+
+  ✓  7 [chromium] › tests/e2e/timefold.e2e.spec.ts:413:3 › P009 时隙镜 TimeFold 端到端测试 (E2E) › 7. 性能基准：90 次请求日程分析 Worker 耗时统计 (中位/均值/P95 统计，指标 ≤2.0s) (4.9s)
+
+  7 passed (24.3s)
+
+To open last HTML report run:
+
+  npx playwright show-report .tmp/playwright-report
+
+Exit Code [npm run test:e2e]: 0
+
+>>> [Phase 2/3] npm run typecheck && npm run build <<<
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+
+> timefold@0.1.0 build
+> npm run typecheck && vite build
+
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 49 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                            0.44 kB │ gzip:  0.32 kB
+dist/assets/timefold.worker-DBthH6KP.js   29.74 kB
+dist/assets/index-lYZDXPLH.css            12.13 kB │ gzip:  2.59 kB
+dist/assets/index-B45Qf-_U.js            312.14 kB │ gzip: 92.37 kB
+✓ built in 1.98s
+Exit Code [npm run typecheck && npm run build]: 0
+
+>>> [Phase 3/3] Regression Checks (npm run test:math && npm run test) <<<
+
+> timefold@0.1.0 test:math
+> vitest run tests/math tests/oracle
+
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/qaRegression.test.ts (29 tests) 185ms
+ ✓ tests/math/invariants.test.ts (10 tests) 194ms
+ ✓ tests/math/workerProtocol.test.ts (25 tests) 259ms
+ ✓ tests/math/validate.test.ts (33 tests) 35ms
+ ✓ tests/oracle/independentOracle.test.ts (12 tests) 107ms
+ ✓ tests/math/recurrence.test.ts (28 tests) 112ms
+stdout | tests/math/compare.test.ts > P009-T007 对照与最早见证汇总测试 > MATH08 黄金用例：TF-F 固定间隔漂移验证 > TF-F 产生正确的 4 个 UTC 实例、4 个 14:00Z 基线和 2026-03-09 +60 见证
+=== TF-F 逐日期 JSON 汇总证据 ===
+{
+  "schema": "timefold.result/1",
+  "input": {
+    "schema": "timefold.spec/1",
+    "name": "TF-F Fixed Interval Drift",
+    "synthetic": true,
+    "zone": {
+      "label": "America/New_York",
+      "snapshot": "frozen-2026",
+      "segments": [
+        {
+          "startUtc": "2025-12-30T00:00:00Z",
+          "endUtc": "2026-03-08T07:00:00Z",
+          "offsetMinutes": -300
+        },
+        {
+          "startUtc": "2026-03-08T07:00:00Z",
+          "endUtc": "2026-11-01T06:00:00Z",
+          "offsetMinutes": -240
+        },
+        {
+          "startUtc": "2026-11-01T06:00:00Z",
+          "endUtc": "2027-01-03T00:00:00Z",
+          "offsetMinutes": -300
+        }
+      ]
+    },
+    "schedule": {
+      "frequency": "weekly",
+      "startDate": "2026-03-02",
+      "endDate": "2026-03-23",
+      "localTime": "09:00",
+      "byWeekday": [
+        1
+      ]
+    },
+    "policy": {
+      "gap": "skip",
+      "fold": "earlier"
+    }
+  },
+  "occurrences": [
+    {
+      "requestedLocal": "2026-03-02 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-02 09:00"
+      ],
+      "baselineUtc": "2026-03-02T14:00:00Z",
+      "driftMinutes": 0
+    },
+    {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-16 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-16 09:00"
+      ],
+      "baselineUtc": "2026-03-16T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-23 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-23 09:00"
+      ],
+      "baselineUtc": "2026-03-23T14:00:00Z",
+      "driftMinutes": 60
+    }
+  ],
+  "requestCount": 4,
+  "selectedCount": 4,
+  "firstWitness": {
+    "type": "DRIFT",
+    "date": "2026-03-09",
+    "boundaryUtc": "2026-03-08T07:00:00Z",
+    "message": "Drift detected on 2026-03-09: baseline UTC (2026-03-09T14:00:00Z) differs by +60 min from wall-clock UTC (2026-03-09T13:00:00Z).",
+    "mapping": {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    }
+  }
+}
+
+ ✓ tests/math/compare.test.ts (12 tests) 26ms
+ ✓ tests/math/calendar.test.ts (28 tests) 81ms
+ ✓ tests/math/map.test.ts (45 tests) 78ms
+ ✓ tests/math/types.test.ts (6 tests) 8ms
+ ✓ tests/math/smoke.test.ts (2 tests) 4ms
+
+ Test Files  11 passed (11)
+      Tests  230 passed (230)
+   Start at  06:15:25
+   Duration  3.14s (transform 1.58s, setup 0ms, import 2.34s, tests 1.09s, environment 3ms)
+
+
+> timefold@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/invariants.test.ts (10 tests) 164ms
+ ✓ tests/math/workerProtocol.test.ts (25 tests) 201ms
+ ✓ tests/ui/integration.test.tsx (17 tests) 509ms
+ ✓ tests/math/qaRegression.test.ts (29 tests) 187ms
+ ✓ tests/ui/witness.test.tsx (15 tests) 191ms
+ ✓ tests/io/json.test.ts (33 tests) 97ms
+ ✓ tests/math/recurrence.test.ts (28 tests) 84ms
+ ✓ tests/ui/framework.test.tsx (17 tests) 186ms
+ ✓ tests/oracle/independentOracle.test.ts (12 tests) 95ms
+ ✓ tests/io/security.test.ts (29 tests) 169ms
+ ✓ tests/ui/timeRail.test.tsx (11 tests) 302ms
+ ✓ tests/math/calendar.test.ts (28 tests) 30ms
+ ✓ tests/math/map.test.ts (45 tests) 85ms
+ ✓ tests/math/validate.test.ts (33 tests) 106ms
+ ✓ tests/math/types.test.ts (6 tests) 9ms
+stdout | tests/math/compare.test.ts > P009-T007 对照与最早见证汇总测试 > MATH08 黄金用例：TF-F 固定间隔漂移验证 > TF-F 产生正确的 4 个 UTC 实例、4 个 14:00Z 基线和 2026-03-09 +60 见证
+=== TF-F 逐日期 JSON 汇总证据 ===
+{
+  "schema": "timefold.result/1",
+  "input": {
+    "schema": "timefold.spec/1",
+    "name": "TF-F Fixed Interval Drift",
+    "synthetic": true,
+    "zone": {
+      "label": "America/New_York",
+      "snapshot": "frozen-2026",
+      "segments": [
+        {
+          "startUtc": "2025-12-30T00:00:00Z",
+          "endUtc": "2026-03-08T07:00:00Z",
+          "offsetMinutes": -300
+        },
+        {
+          "startUtc": "2026-03-08T07:00:00Z",
+          "endUtc": "2026-11-01T06:00:00Z",
+          "offsetMinutes": -240
+        },
+        {
+          "startUtc": "2026-11-01T06:00:00Z",
+          "endUtc": "2027-01-03T00:00:00Z",
+          "offsetMinutes": -300
+        }
+      ]
+    },
+    "schedule": {
+      "frequency": "weekly",
+      "startDate": "2026-03-02",
+      "endDate": "2026-03-23",
+      "localTime": "09:00",
+      "byWeekday": [
+        1
+      ]
+    },
+    "policy": {
+      "gap": "skip",
+      "fold": "earlier"
+    }
+  },
+  "occurrences": [
+    {
+      "requestedLocal": "2026-03-02 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-02 09:00"
+      ],
+      "baselineUtc": "2026-03-02T14:00:00Z",
+      "driftMinutes": 0
+    },
+    {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-16 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-16 09:00"
+      ],
+      "baselineUtc": "2026-03-16T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-23 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-23 09:00"
+      ],
+      "baselineUtc": "2026-03-23T14:00:00Z",
+      "driftMinutes": 60
+    }
+  ],
+  "requestCount": 4,
+  "selectedCount": 4,
+  "firstWitness": {
+    "type": "DRIFT",
+    "date": "2026-03-09",
+    "boundaryUtc": "2026-03-08T07:00:00Z",
+    "message": "Drift detected on 2026-03-09: baseline UTC (2026-03-09T14:00:00Z) differs by +60 min from wall-clock UTC (2026-03-09T13:00:00Z).",
+    "mapping": {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    }
+  }
+}
+
+ ✓ tests/math/compare.test.ts (12 tests) 72ms
+ ✓ tests/math/smoke.test.ts (2 tests) 4ms
+
+ Test Files  17 passed (17)
+      Tests  352 passed (352)
+   Start at  06:15:29
+   Duration  5.62s (transform 2.77s, setup 0ms, import 4.82s, tests 2.49s, environment 3ms)
+
+Exit Code [npm run test:math && npm run test]: 0
+
+================================================================================
+=== ACCEPTANCE PIPELINE SUMMARY ===
+1. npm run test:e2e                -> Exit Code: 0
+2. npm run typecheck && build      -> Exit Code: 0
+3. npm run test:math && test       -> Exit Code: 0
+================================================================================
+VERDICT: ALL ACCEPTANCE CHECKS PASSED (EXIT CODE 0)

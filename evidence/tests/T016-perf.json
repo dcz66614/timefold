@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-11-02T07:43:26.156Z",
+  "benchmark": "90_request_dates_worker_analyze",
+  "methodology": "从点击\"运行分析\"到状态横幅变为READY的完整端到端耗时 (包含主线程派发、Dedicated Worker 同步 analyze、Web Crypto SHA-256 计算及主线程状态渲染)。通过交替变更折返策略触发 DIRTY 状态后重新计算，连续采样 15 次，计算中位数、平均值、最小值、最大值与 P95。",
+  "environment": {
+    "platform": "linux",
+    "arch": "x64",
+    "release": "7.0.0-39-generic",
+    "cpuModel": "AMD EPYC 9D25 126-Core Processor",
+    "cpuCores": 4,
+    "totalMemoryMb": 7934,
+    "freeMemoryMb": 809,
+    "nodeVersion": "v24.22.1"
+  },
+  "schedule": {
+    "frequency": "daily",
+    "zone": "America/New_York",
+    "startDate": "2026-03-01",
+    "endDate": "2026-05-29",
+    "requestDatesCount": 90
+  },
+  "statistics": {
+    "samples": [
+      191.8,
+      218.7,
+      129.1,
+      131.7,
+      195.7,
+      139.9,
+      131.9,
+      219.3,
+      172,
+      180.6,
+      194.7,
+      143.1,
+      74.7,
+      113,
+      103
+    ],
+    "sampleCount": 15,
+    "meanMs": 155.95,
+    "medianMs": 143.1,
+    "minMs": 74.7,
+    "maxMs": 219.3,
+    "p95Ms": 219.3,
+    "stdDevMs": 42.22,
+    "thresholdTargetMs": 2000,
+    "verdict": "PASS"
+  }
+}

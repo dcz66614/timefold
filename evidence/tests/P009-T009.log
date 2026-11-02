@@ -1,0 +1,537 @@
+================================================================================
+P009-T009 验收证据日志：六预设与安全 JSON 输入输出
+执行时间: 2026-11-02T04:50:28.114Z
+环境: Node v24.22.1, NPM 10.9.4, OS linux x64
+================================================================================
+
+### 1. 六份确切预设原始 JSON 固化文件 (tests/fixtures/TF-*.json)
+
+[Fixture TF-A.json] 路径: tests/fixtures/TF-A.json
+- 文件大小: 799 字节 (< 256 KiB 限制)
+- SHA-256: 6d7d28f40c8c8889a1b32754ddcee753d146cf3e8abb12a79dcdaabb71419190
+- 原始 JSON 内容:
+{
+  "schema": "timefold.spec/1",
+  "name": "TF-A Spring Gap",
+  "synthetic": true,
+  "zone": {
+    "label": "America/New_York",
+    "snapshot": "frozen-2026",
+    "segments": [
+      {
+        "startUtc": "2025-12-30T00:00:00Z",
+        "endUtc": "2026-03-08T07:00:00Z",
+        "offsetMinutes": -300
+      },
+      {
+        "startUtc": "2026-03-08T07:00:00Z",
+        "endUtc": "2026-11-01T06:00:00Z",
+        "offsetMinutes": -240
+      },
+      {
+        "startUtc": "2026-11-01T06:00:00Z",
+        "endUtc": "2027-01-03T00:00:00Z",
+        "offsetMinutes": -300
+      }
+    ]
+  },
+  "schedule": {
+    "frequency": "once",
+    "startDate": "2026-03-08",
+    "endDate": "2026-03-08",
+    "localTime": "02:30",
+    "byWeekday": []
+  },
+  "policy": {
+    "gap": "skip",
+    "fold": "earlier"
+  }
+}
+--------------------------------------------------------------------------------
+
+[Fixture TF-B.json] 路径: tests/fixtures/TF-B.json
+- 文件大小: 804 字节 (< 256 KiB 限制)
+- SHA-256: 0ef8389fe1086bbdb099bf93120e870f1c8ada0401da33ca732c655150812c02
+- 原始 JSON 内容:
+{
+  "schema": "timefold.spec/1",
+  "name": "TF-B New York Fall Fold",
+  "synthetic": true,
+  "zone": {
+    "label": "America/New_York",
+    "snapshot": "frozen-2026",
+    "segments": [
+      {
+        "startUtc": "2025-12-30T00:00:00Z",
+        "endUtc": "2026-03-08T07:00:00Z",
+        "offsetMinutes": -300
+      },
+      {
+        "startUtc": "2026-03-08T07:00:00Z",
+        "endUtc": "2026-11-01T06:00:00Z",
+        "offsetMinutes": -240
+      },
+      {
+        "startUtc": "2026-11-01T06:00:00Z",
+        "endUtc": "2027-01-03T00:00:00Z",
+        "offsetMinutes": -300
+      }
+    ]
+  },
+  "schedule": {
+    "frequency": "once",
+    "startDate": "2026-11-01",
+    "endDate": "2026-11-01",
+    "localTime": "01:30",
+    "byWeekday": []
+  },
+  "policy": {
+    "gap": "skip",
+    "fold": "both"
+  }
+}
+--------------------------------------------------------------------------------
+
+[Fixture TF-C.json] 路径: tests/fixtures/TF-C.json
+- 文件大小: 795 字节 (< 256 KiB 限制)
+- SHA-256: 6d58054f212988a00e19ae1a727de71218c54501c402faff5af8d6a6379d63da
+- 原始 JSON 内容:
+{
+  "schema": "timefold.spec/1",
+  "name": "TF-C London Spring Gap",
+  "synthetic": true,
+  "zone": {
+    "label": "Europe/London",
+    "snapshot": "frozen-2026",
+    "segments": [
+      {
+        "startUtc": "2025-12-30T00:00:00Z",
+        "endUtc": "2026-03-29T01:00:00Z",
+        "offsetMinutes": 0
+      },
+      {
+        "startUtc": "2026-03-29T01:00:00Z",
+        "endUtc": "2026-10-25T01:00:00Z",
+        "offsetMinutes": 60
+      },
+      {
+        "startUtc": "2026-10-25T01:00:00Z",
+        "endUtc": "2027-01-03T00:00:00Z",
+        "offsetMinutes": 0
+      }
+    ]
+  },
+  "schedule": {
+    "frequency": "once",
+    "startDate": "2026-03-29",
+    "endDate": "2026-03-29",
+    "localTime": "01:30",
+    "byWeekday": []
+  },
+  "policy": {
+    "gap": "skip",
+    "fold": "earlier"
+  }
+}
+--------------------------------------------------------------------------------
+
+[Fixture TF-D.json] 路径: tests/fixtures/TF-D.json
+- 文件大小: 791 字节 (< 256 KiB 限制)
+- SHA-256: 6435e608278593a500f43895dfbcf92ef39bd047165eec6d6a7d8396b5c777bc
+- 原始 JSON 内容:
+{
+  "schema": "timefold.spec/1",
+  "name": "TF-D London Fall Fold",
+  "synthetic": true,
+  "zone": {
+    "label": "Europe/London",
+    "snapshot": "frozen-2026",
+    "segments": [
+      {
+        "startUtc": "2025-12-30T00:00:00Z",
+        "endUtc": "2026-03-29T01:00:00Z",
+        "offsetMinutes": 0
+      },
+      {
+        "startUtc": "2026-03-29T01:00:00Z",
+        "endUtc": "2026-10-25T01:00:00Z",
+        "offsetMinutes": 60
+      },
+      {
+        "startUtc": "2026-10-25T01:00:00Z",
+        "endUtc": "2027-01-03T00:00:00Z",
+        "offsetMinutes": 0
+      }
+    ]
+  },
+  "schedule": {
+    "frequency": "once",
+    "startDate": "2026-10-25",
+    "endDate": "2026-10-25",
+    "localTime": "01:30",
+    "byWeekday": []
+  },
+  "policy": {
+    "gap": "skip",
+    "fold": "both"
+  }
+}
+--------------------------------------------------------------------------------
+
+[Fixture TF-E.json] 路径: tests/fixtures/TF-E.json
+- 文件大小: 528 字节 (< 256 KiB 限制)
+- SHA-256: 68391486c10fc57209bc88ed7af1302cecd03c01e3ba943a3ab4402cd28b199d
+- 原始 JSON 内容:
+{
+  "schema": "timefold.spec/1",
+  "name": "TF-E Tokyo Daily",
+  "synthetic": true,
+  "zone": {
+    "label": "Asia/Tokyo",
+    "snapshot": "frozen-2026",
+    "segments": [
+      {
+        "startUtc": "2025-12-30T00:00:00Z",
+        "endUtc": "2027-01-03T00:00:00Z",
+        "offsetMinutes": 540
+      }
+    ]
+  },
+  "schedule": {
+    "frequency": "daily",
+    "startDate": "2026-06-01",
+    "endDate": "2026-06-03",
+    "localTime": "09:00",
+    "byWeekday": []
+  },
+  "policy": {
+    "gap": "skip",
+    "fold": "earlier"
+  }
+}
+--------------------------------------------------------------------------------
+
+[Fixture TF-F.json] 路径: tests/fixtures/TF-F.json
+- 文件大小: 824 字节 (< 256 KiB 限制)
+- SHA-256: 8e3860ebcf90d4e993ec7de482dae40236b108cbacd9180260b0121ed14ee53d
+- 原始 JSON 内容:
+{
+  "schema": "timefold.spec/1",
+  "name": "TF-F Fixed Interval Drift",
+  "synthetic": true,
+  "zone": {
+    "label": "America/New_York",
+    "snapshot": "frozen-2026",
+    "segments": [
+      {
+        "startUtc": "2025-12-30T00:00:00Z",
+        "endUtc": "2026-03-08T07:00:00Z",
+        "offsetMinutes": -300
+      },
+      {
+        "startUtc": "2026-03-08T07:00:00Z",
+        "endUtc": "2026-11-01T06:00:00Z",
+        "offsetMinutes": -240
+      },
+      {
+        "startUtc": "2026-11-01T06:00:00Z",
+        "endUtc": "2027-01-03T00:00:00Z",
+        "offsetMinutes": -300
+      }
+    ]
+  },
+  "schedule": {
+    "frequency": "weekly",
+    "startDate": "2026-03-02",
+    "endDate": "2026-03-23",
+    "localTime": "09:00",
+    "byWeekday": [
+      1
+    ]
+  },
+  "policy": {
+    "gap": "skip",
+    "fold": "earlier"
+  }
+}
+--------------------------------------------------------------------------------
+
+### 2. 安全防御：导入拒绝示例与不可信 Result 忽略重算演示
+
+--- [示例 2.1] 超过 256 KiB 文件拒绝示例 ---
+输入: 填充空格超过 262,144 字节的 JSON 文本 (262,154 字节)
+预期拒绝: 抛出 TimeFoldError (code: E_JSON_SIZE_EXCEEDED)
+实测结果: 成功拦截，抛出 TimeFoldError: JSON text size (262154 bytes) exceeds maximum limit of 256 KiB (262144 bytes)
+
+--- [示例 2.2] 顶层与嵌套原型污染防御示例 ---
+输入 1: {"schema":"timefold.spec/1","__proto__":{"polluted":true}}
+实测结果: 成功拦截，抛出 TimeFoldError (code: E_PROTOTYPE_POLLUTION, path: "__proto__")
+输入 2: 深层嵌套 {"__proto__":{"injected":true}}
+实测结果: 成功拦截，抛出 TimeFoldError (code: E_PROTOTYPE_POLLUTION, path: "__proto__")
+断言检查: ({}).polluted === undefined, ({}).injected === undefined (全局原型未受任何污染)
+
+--- [示例 2.3] 未知字段白名单防御示例 ---
+输入: 含有 extraMaliciousField 的 timefold.export/1 包裹
+实测结果: 成功拦截，抛出 TimeFoldError (code: E_UNKNOWN_PROPERTY, path: "extraMaliciousField")
+
+--- [示例 2.4] 损坏语法与损坏语义防御示例 ---
+输入 1: 截断语法 {"schema": "timefold.spec/1", unclosed
+实测结果: 抛出 TimeFoldError (code: E_JSON_SYNTAX)
+输入 2: 非法日期 startDate="2026-02-30"
+实测结果: 抛出 TimeFoldError (code: E_INVALID_CALENDAR_DATE, path: "schedule.startDate")
+状态保护验证: 在上述损坏输入解析失败后，编辑器持有的当前有效状态 (TF-B) 保持 100% 完整，无任何被覆盖或被污染
+
+--- [示例 2.5] 导出包裹中的不可信 Result 忽略与强制重算示例 ---
+场景: 导入一个伪造的 TF-A export 包裹，其中 fakeResult 谎称 status=NORMAL 且 requestCount=999
+处理过程: safeJsonParse -> 丢弃 raw.result -> validateInput(raw.input) -> analyze(validatedInput)
+重算结果: 真实 status=GAP, candidatesUtc=[], selectedCount=0, firstWitness.type=GAP
+结论: 任何伪造、篡改或带 XSS 脚本的外部 result 均被彻底无视，以生产内核重算为唯一真值！
+
+### 3. 六预设完整 Roundtrip 校验日志 (Export -> Import -> Recompute)
+
+[Roundtrip TF-A] TF-A Spring Gap
+  1. exportTimeFold: 导出顶层键顺序 schema -> input -> result，无用户名/时间戳
+  2. parseTimeFoldJson: 导入 input 逐字段比对: 完全一致 (PASS)
+  3. importAndAnalyze: 重算状态=GAP, 请求数=1, 选中数=0, 首见证=GAP
+  4. 结果一致性比对: occurrences, firstWitness, counts 深度相等 (PASS)
+
+[Roundtrip TF-B] TF-B New York Fall Fold
+  1. exportTimeFold: 导出顶层键顺序 schema -> input -> result，无用户名/时间戳
+  2. parseTimeFoldJson: 导入 input 逐字段比对: 完全一致 (PASS)
+  3. importAndAnalyze: 重算状态=FOLD, 请求数=1, 选中数=2, 首见证=FOLD
+  4. 结果一致性比对: occurrences, firstWitness, counts 深度相等 (PASS)
+
+[Roundtrip TF-C] TF-C London Spring Gap
+  1. exportTimeFold: 导出顶层键顺序 schema -> input -> result，无用户名/时间戳
+  2. parseTimeFoldJson: 导入 input 逐字段比对: 完全一致 (PASS)
+  3. importAndAnalyze: 重算状态=GAP, 请求数=1, 选中数=0, 首见证=GAP
+  4. 结果一致性比对: occurrences, firstWitness, counts 深度相等 (PASS)
+
+[Roundtrip TF-D] TF-D London Fall Fold
+  1. exportTimeFold: 导出顶层键顺序 schema -> input -> result，无用户名/时间戳
+  2. parseTimeFoldJson: 导入 input 逐字段比对: 完全一致 (PASS)
+  3. importAndAnalyze: 重算状态=FOLD, 请求数=1, 选中数=2, 首见证=FOLD
+  4. 结果一致性比对: occurrences, firstWitness, counts 深度相等 (PASS)
+
+[Roundtrip TF-E] TF-E Tokyo Daily
+  1. exportTimeFold: 导出顶层键顺序 schema -> input -> result，无用户名/时间戳
+  2. parseTimeFoldJson: 导入 input 逐字段比对: 完全一致 (PASS)
+  3. importAndAnalyze: 重算状态=NORMAL×3, 请求数=3, 选中数=3, 首见证=NONE
+  4. 结果一致性比对: occurrences, firstWitness, counts 深度相等 (PASS)
+
+[Roundtrip TF-F] TF-F Fixed Interval Drift
+  1. exportTimeFold: 导出顶层键顺序 schema -> input -> result，无用户名/时间戳
+  2. parseTimeFoldJson: 导入 input 逐字段比对: 完全一致 (PASS)
+  3. importAndAnalyze: 重算状态=NORMAL×4, 请求数=4, 选中数=4, 首见证=DRIFT (2026-03-09 +60min)
+  4. 结果一致性比对: occurrences, firstWitness, counts 深度相等 (PASS)
+
+================================================================================
+### 4. 权威验收命令执行输出 (退出码必须均为 0)
+================================================================================
+
+
+--------------------------------------------------------------------------------
+[COMMAND] npx vitest run tests/io/json.test.ts
+--------------------------------------------------------------------------------
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/io/json.test.ts (33 tests) 42ms
+
+ Test Files  1 passed (1)
+      Tests  33 passed (33)
+   Start at  04:50:29
+   Duration  637ms (transform 268ms, setup 0ms, import 322ms, tests 42ms, environment 0ms)
+
+
+[STATUS] 退出码: 0 (SUCCESS)
+
+--------------------------------------------------------------------------------
+[COMMAND] npm run test:math
+--------------------------------------------------------------------------------
+
+> timefold@0.1.0 test:math
+> vitest run tests/math tests/oracle
+
+
+ RUN  v4.1.12 /home/hatch/workspace/p009-work/P009-timefold/03_source
+
+ ✓ tests/math/validate.test.ts (33 tests) 68ms
+ ✓ tests/oracle/independentOracle.test.ts (12 tests) 160ms
+ ✓ tests/math/invariants.test.ts (10 tests) 227ms
+ ✓ tests/math/calendar.test.ts (28 tests) 29ms
+stdout | tests/math/compare.test.ts > P009-T007 对照与最早见证汇总测试 > MATH08 黄金用例：TF-F 固定间隔漂移验证 > TF-F 产生正确的 4 个 UTC 实例、4 个 14:00Z 基线和 2026-03-09 +60 见证
+=== TF-F 逐日期 JSON 汇总证据 ===
+{
+  "schema": "timefold.result/1",
+  "input": {
+    "schema": "timefold.spec/1",
+    "name": "TF-F Fixed Interval Drift",
+    "synthetic": true,
+    "zone": {
+      "label": "America/New_York",
+      "snapshot": "frozen-2026",
+      "segments": [
+        {
+          "startUtc": "2025-12-30T00:00:00Z",
+          "endUtc": "2026-03-08T07:00:00Z",
+          "offsetMinutes": -300
+        },
+        {
+          "startUtc": "2026-03-08T07:00:00Z",
+          "endUtc": "2026-11-01T06:00:00Z",
+          "offsetMinutes": -240
+        },
+        {
+          "startUtc": "2026-11-01T06:00:00Z",
+          "endUtc": "2027-01-03T00:00:00Z",
+          "offsetMinutes": -300
+        }
+      ]
+    },
+    "schedule": {
+      "frequency": "weekly",
+      "startDate": "2026-03-02",
+      "endDate": "2026-03-23",
+      "localTime": "09:00",
+      "byWeekday": [
+        1
+      ]
+    },
+    "policy": {
+      "gap": "skip",
+      "fold": "earlier"
+    }
+  },
+  "occurrences": [
+    {
+      "requestedLocal": "2026-03-02 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-02T14:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-02 09:00"
+      ],
+      "baselineUtc": "2026-03-02T14:00:00Z",
+      "driftMinutes": 0
+    },
+    {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-16 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-16T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-16 09:00"
+      ],
+      "baselineUtc": "2026-03-16T14:00:00Z",
+      "driftMinutes": 60
+    },
+    {
+      "requestedLocal": "2026-03-23 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-23T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-23 09:00"
+      ],
+      "baselineUtc": "2026-03-23T14:00:00Z",
+      "driftMinutes": 60
+    }
+  ],
+  "requestCount": 4,
+  "selectedCount": 4,
+  "firstWitness": {
+    "type": "DRIFT",
+    "date": "2026-03-09",
+    "boundaryUtc": "2026-03-08T07:00:00Z",
+    "message": "Drift detected on 2026-03-09: baseline UTC (2026-03-09T14:00:00Z) differs by +60 min from wall-clock UTC (2026-03-09T13:00:00Z).",
+    "mapping": {
+      "requestedLocal": "2026-03-09 09:00",
+      "status": "NORMAL",
+      "candidatesUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "selectedUtc": [
+        "2026-03-09T13:00:00Z"
+      ],
+      "realizedLocal": [
+        "2026-03-09 09:00"
+      ],
+      "baselineUtc": "2026-03-09T14:00:00Z",
+      "driftMinutes": 60
+    }
+  }
+}
+
+ ✓ tests/math/compare.test.ts (12 tests) 87ms
+ ✓ tests/math/recurrence.test.ts (28 tests) 90ms
+ ✓ tests/math/types.test.ts (6 tests) 11ms
+ ✓ tests/math/map.test.ts (45 tests) 22ms
+ ✓ tests/math/smoke.test.ts (2 tests) 4ms
+
+ Test Files  9 passed (9)
+      Tests  176 passed (176)
+   Start at  04:50:30
+   Duration  2.62s (transform 1.48s, setup 0ms, import 2.04s, tests 698ms, environment 1ms)
+
+
+[STATUS] 退出码: 0 (SUCCESS)
+
+--------------------------------------------------------------------------------
+[COMMAND] npm run build
+--------------------------------------------------------------------------------
+
+> timefold@0.1.0 build
+> npm run typecheck && vite build
+
+
+> timefold@0.1.0 typecheck
+> tsc --noEmit
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 28 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                  0.37 kB │ gzip:  0.28 kB
+dist/assets/index-CG2Ounkc.js  223.16 kB │ gzip: 69.78 kB
+✓ built in 1.64s
+
+[STATUS] 退出码: 0 (SUCCESS)
+
+================================================================================
+### 5. 验收命令结果汇总
+================================================================================
+- npx vitest run tests/io/json.test.ts => 退出码: 0 (PASS)
+- npm run test:math => 退出码: 0 (PASS)
+- npm run build => 退出码: 0 (PASS)
+- 全部命令最终判定: ALL PASSED (EXIT CODE 0)
+- 记录完成时间: 2026-11-02T04:50:40.462Z
+================================================================================
